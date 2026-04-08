@@ -1115,18 +1115,7 @@
     font-family: var(--menu-localization-font);
     font-size: var(--menu-localization-font-size);
   }
-{% endstylesheet %}
 
-{% unless request.design_mode %}
-  <script type="module">
-    import { hydrate } from '@theme/section-hydration';
-    const url = new URL(window.location.href);
-    url.searchParams.delete('page');
-    hydrate('{{ section.id }}', url);
-  </script>
-{% endunless %}
-
-{% stylesheet %}
   .header-phone-cta {
     display: none;
 
@@ -1152,6 +1141,15 @@
     }
   }
 {% endstylesheet %}
+
+{% unless request.design_mode %}
+  <script type="module">
+    import { hydrate } from '@theme/section-hydration';
+    const url = new URL(window.location.href);
+    url.searchParams.delete('page');
+    hydrate('{{ section.id }}', url);
+  </script>
+{% endunless %}
 
 {% schema %}
 {
