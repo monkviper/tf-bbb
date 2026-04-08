@@ -49,6 +49,10 @@
   {% endif %}
   {{- block.shopify_attributes -}}
 >
+  {% if phone_cta != blank %}
+    {{ phone_cta }}
+  {% endif %}
+
   {% if shop.customer_accounts_enabled %}
     {% liquid
       assign account_actions_style = ''

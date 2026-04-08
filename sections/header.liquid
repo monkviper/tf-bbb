@@ -57,8 +57,19 @@
     content_for 'block', type: '_header-menu', id: 'header-menu', variant: 'navigation_bar', transparent: transparent
   endcapture
 
+  capture phone_cta_html
+    if section.settings.show_phone and section.settings.phone_number != blank
+      assign phone_href = 'tel:' | append: section.settings.phone_number | replace: '.', '' | replace: ' ', '' | replace: '-', ''
+      echo '<a class="header-phone-cta" href="'
+      echo phone_href
+      echo '">'
+      echo section.settings.phone_number
+      echo '</a>'
+    endif
+  endcapture
+
   capture actions
-    render 'header-actions', customer_account_menu: section.settings.customer_account_menu, display_style: section.settings.actions_display_style, section: section
+    render 'header-actions', customer_account_menu: section.settings.customer_account_menu, display_style: section.settings.actions_display_style, section: section, phone_cta: phone_cta_html
   endcapture
 
   if shop.customer_accounts_enabled
@@ -1115,6 +1126,33 @@
   </script>
 {% endunless %}
 
+{% stylesheet %}
+  .header-phone-cta {
+    display: none;
+
+    @media screen and (min-width: 750px) {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 48px;
+      background-color: #F4F4F6;
+      padding: 4px 24px;
+      font-family: var(--font-heading--family);
+      font-weight: 600;
+      font-size: 0.875rem;
+      line-height: 25px;
+      text-transform: uppercase;
+      color: #151515;
+      text-decoration: none;
+      white-space: nowrap;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+{% endstylesheet %}
+
 {% schema %}
 {
   "name": "t:names.header",
@@ -1354,6 +1392,23 @@
       ],
       "default": "top",
       "visible_if": "{{ section.settings.show_country or section.settings.show_language }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.phone_cta"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_phone",
+      "label": "t:settings.show_phone",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "phone_number",
+      "label": "t:settings.phone_number",
+      "default": "855.292.2831",
+      "visible_if": "{{ section.settings.show_phone }}"
     },
     {
       "type": "header",

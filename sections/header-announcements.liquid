@@ -20,20 +20,53 @@
     endif
   %}
 
-  <announcement-bar-component
-    class="announcement-bar__slider"
-    {% if autoplay == true %}
-      autoplay="{{ section.settings.speed }}" aria-live="polite"
-    {% endif %}
-  >
-    {% if show_arrows %}
-      {% render 'slideshow-arrows', icon_style: 'chevron' %}
-    {% endif %}
+  <div class="announcement-bar__inner">
+    <announcement-bar-component
+      class="announcement-bar__slider"
+      {% if autoplay == true %}
+        autoplay="{{ section.settings.speed }}" aria-live="polite"
+      {% endif %}
+    >
+      {% if show_arrows %}
+        {% render 'slideshow-arrows', icon_style: 'chevron' %}
+      {% endif %}
 
-    <div class="announcement-bar__slides">
-      {% content_for 'blocks' %}
-    </div>
-  </announcement-bar-component>
+      <div class="announcement-bar__slides">
+        {% content_for 'blocks' %}
+      </div>
+    </announcement-bar-component>
+
+    {% if section.settings.show_utility_links %}
+      <div class="announcement-bar__utility-links">
+        {% if section.settings.utility_link_1_text != blank %}
+          <a
+            class="announcement-bar__utility-link"
+            {% if section.settings.utility_link_1_url != blank %}
+              href="{{ section.settings.utility_link_1_url }}"
+            {% endif %}
+          >
+            {% if section.settings.utility_link_1_icon == 'marker' %}
+              <span class="svg-wrapper announcement-bar__utility-icon">
+                {{ 'marker-02.svg' | inline_asset_content }}
+              </span>
+            {% endif %}
+            {{- section.settings.utility_link_1_text -}}
+          </a>
+        {% endif %}
+
+        {% if section.settings.utility_link_2_text != blank %}
+          <a
+            class="announcement-bar__utility-link"
+            {% if section.settings.utility_link_2_url != blank %}
+              href="{{ section.settings.utility_link_2_url }}"
+            {% endif %}
+          >
+            {{- section.settings.utility_link_2_text -}}
+          </a>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
 </aside>
 
 {% stylesheet %}
@@ -41,11 +74,24 @@
     border-block-end: var(--border-bottom-width) solid var(--color-border);
   }
 
+  .announcement-bar__inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+
+    @media screen and (min-width: 750px) {
+      justify-content: space-between;
+    }
+  }
+
   .announcement-bar__slider {
     display: flex;
     flex-direction: row;
     align-items: center;
     position: relative;
+    flex: 1;
+    min-width: 0;
 
     @media screen and (max-width: 749px) {
       grid-column: 1 / -1;
@@ -119,6 +165,46 @@
     position: absolute;
     inset: 0;
   }
+
+  .announcement-bar__utility-links {
+    display: none;
+
+    @media screen and (min-width: 750px) {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-shrink: 0;
+    }
+  }
+
+  .announcement-bar__utility-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-body--family);
+    font-weight: 400;
+    font-size: 0.75rem;
+    line-height: 17px;
+    color: inherit;
+    text-decoration: none;
+    white-space: nowrap;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .announcement-bar__utility-icon {
+    display: inline-flex;
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+  }
+
+  .announcement-bar__utility-icon svg {
+    width: 16px;
+    height: 16px;
+  }
 {% endstylesheet %}
 
 {% schema %}
@@ -141,6 +227,59 @@
       "max": 10,
       "default": 5,
       "unit": "sec"
+    },
+    {
+      "type": "header",
+      "content": "t:content.utility_links"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_utility_links",
+      "label": "t:settings.show_utility_links",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "utility_link_1_text",
+      "label": "t:settings.utility_link_1_text",
+      "default": "Find a Dealer/Installer",
+      "visible_if": "{{ section.settings.show_utility_links }}"
+    },
+    {
+      "type": "url",
+      "id": "utility_link_1_url",
+      "label": "t:settings.utility_link_1_url",
+      "visible_if": "{{ section.settings.show_utility_links }}"
+    },
+    {
+      "type": "select",
+      "id": "utility_link_1_icon",
+      "label": "t:settings.utility_link_1_icon",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:options.none_icon"
+        },
+        {
+          "value": "marker",
+          "label": "t:options.marker"
+        }
+      ],
+      "default": "marker",
+      "visible_if": "{{ section.settings.show_utility_links }}"
+    },
+    {
+      "type": "text",
+      "id": "utility_link_2_text",
+      "label": "t:settings.utility_link_2_text",
+      "default": "Commercial Sales",
+      "visible_if": "{{ section.settings.show_utility_links }}"
+    },
+    {
+      "type": "url",
+      "id": "utility_link_2_url",
+      "label": "t:settings.utility_link_2_url",
+      "visible_if": "{{ section.settings.show_utility_links }}"
     },
     {
       "type": "header",
