@@ -24,9 +24,17 @@
     {{ block.shopify_attributes }}
     aria-hidden="{% if block_index == 0 %}false{% else %}true{% endif %}"
   >
-    <p class="announcement-bar__text">
-      {{ block.settings.text }}
-    </p>
+    <span class="announcement-bar__slide-content">
+      <p class="announcement-bar__text">
+        {{ block.settings.text }}
+      </p>
+
+      {% if block_settings.button_text != blank %}
+        <span class="announcement-bar__cta">
+          {{ block_settings.button_text | escape }}
+        </span>
+      {% endif %}
+    </span>
 
     {% if block_settings.link != blank %}
       <a
@@ -106,6 +114,29 @@
     margin-inline: auto;
   }
 
+  .announcement-bar__slide-content {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+  }
+
+  .announcement-bar__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid currentColor;
+    border-radius: 2px;
+    padding: 0;
+    font-family: var(--font-heading--family);
+    font-weight: 600;
+    font-size: 0.75rem;
+    line-height: 17px;
+    white-space: nowrap;
+    text-decoration: none;
+    color: inherit;
+  }
+
   .text-block--align-right,
   .text-block--align-right > * {
     margin-inline-start: auto;
@@ -127,6 +158,16 @@
       "type": "url",
       "id": "link",
       "label": "t:settings.link"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "t:settings.button_text"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "t:settings.button_link"
     },
     {
       "type": "header",
