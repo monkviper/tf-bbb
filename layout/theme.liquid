@@ -6,6 +6,7 @@
   lang="{{ request.locale.iso_code }}"
 >
   <head>
+    {%- render 'theme-factory-credit' -%}
     {%- if settings.favicon != blank -%}
       <link
         rel="icon"
@@ -29,7 +30,9 @@
     {%- render 'fonts' -%}
     {%- render 'scripts' -%}
     {%- render 'theme-styles-variables' -%}
+    {%- render 'design-system-tokens' -%}
     {%- render 'color-schemes' -%}
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 
     {% if request.design_mode %}
       {%- render 'theme-editor' -%}

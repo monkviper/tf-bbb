@@ -1,0 +1,291 @@
+/* Design System Styleguide */
+
+.ds-page {
+  max-width: 1408px;
+  margin-inline: auto;
+  padding: var(--ds-padding-top, 64px) 64px var(--ds-padding-bottom, 64px);
+  font-family: var(--ds-font-family);
+  color: var(--ds-color-black);
+}
+
+.ds-section {
+  margin-block-end: 64px;
+}
+
+.ds-section:last-child {
+  margin-block-end: 0;
+}
+
+.ds-section__title {
+  font-family: var(--ds-font-family);
+  font-weight: var(--ds-font-weight-semibold);
+  font-size: 48px;
+  line-height: 56px;
+  margin-block-end: 40px;
+}
+
+.ds-section__title--brand {
+  color: var(--ds-color-dark-blue);
+}
+
+.ds-section__title--default {
+  color: var(--ds-color-black);
+}
+
+/* Typography Tables */
+.ds-table {
+  width: 100%;
+}
+
+.ds-table__header-row {
+  display: flex;
+  gap: 48px;
+  align-items: center;
+  padding-block-end: 12px;
+  border-block-end: 1px solid rgba(21, 21, 21, 0.3);
+  margin-block-end: 12px;
+}
+
+.ds-table__header-cell {
+  font-family: var(--ds-font-family);
+  font-weight: var(--ds-font-weight-normal);
+  font-size: 12px;
+  line-height: 17px;
+  color: var(--ds-color-black);
+}
+
+.ds-table__row {
+  display: flex;
+  gap: 48px;
+  align-items: center;
+  padding-block-end: 12px;
+  border-block-end: 1px solid rgba(21, 21, 21, 0.3);
+  margin-block-end: 12px;
+}
+
+/* Font Family Table */
+.ds-table__col-family {
+  width: 440px;
+  flex-shrink: 0;
+}
+
+.ds-table__col-class {
+  width: 144px;
+  flex-shrink: 0;
+}
+
+.ds-table__col-properties {
+  flex: 1;
+}
+
+/* Font Size Table */
+.ds-table__col-label {
+  width: 160px;
+  flex-shrink: 0;
+}
+
+.ds-table__col-label-text {
+  font-family: var(--ds-font-family);
+  font-weight: var(--ds-font-weight-normal);
+  font-size: 12px;
+  line-height: 17px;
+  color: var(--ds-color-black);
+  white-space: pre-line;
+}
+
+.ds-table__col-sample {
+  flex: 1;
+  min-width: 0;
+}
+
+.ds-table__col-default {
+  flex: 1;
+}
+
+/* Font Weight Table */
+.ds-table__col-weight-family {
+  width: 480px;
+  flex-shrink: 0;
+}
+
+.ds-table__col-weight-class {
+  width: 160px;
+  flex-shrink: 0;
+}
+
+.ds-table__col-weight-properties {
+  flex: 1;
+}
+
+/* Font size sample inline pair */
+.ds-font-sample-pair {
+  display: flex;
+  gap: 48px;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+}
+
+/* Color Cards */
+.ds-color-group {
+  margin-block-end: 40px;
+}
+
+.ds-color-group:last-child {
+  margin-block-end: 0;
+}
+
+.ds-color-group__title {
+  font-family: var(--ds-font-family);
+  font-weight: var(--ds-font-weight-semibold);
+  font-size: 20px;
+  line-height: 28px;
+  letter-spacing: -0.4px;
+  color: var(--ds-color-dark-blue);
+  margin-block-end: 24px;
+}
+
+.ds-color-group__title--default {
+  color: var(--ds-color-black);
+}
+
+.ds-color-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.ds-color-card {
+  width: 104px;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(166, 175, 195, 0.4);
+  background-color: var(--ds-color-white);
+}
+
+.ds-color-card__swatch {
+  height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-inline: 12px;
+}
+
+.ds-color-card__name {
+  font-family: var(--ds-font-family);
+  font-weight: var(--ds-font-weight-normal);
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.ds-color-card__details {
+  height: 56px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 12px 8px;
+}
+
+.ds-color-card__shade {
+  font-family: var(--ds-font-family);
+  font-weight: var(--ds-font-weight-normal);
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--ds-color-black);
+}
+
+.ds-color-card__hex {
+  font-family: var(--ds-font-family);
+  font-weight: var(--ds-font-weight-normal);
+  font-size: 14px;
+  line-height: 20px;
+}
+
+/* Button Showcase */
+.ds-button-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  align-items: center;
+}
+
+.ds-button-row {
+  margin-block-end: 24px;
+}
+
+.ds-button-row__title {
+  font-family: var(--ds-font-family);
+  font-weight: var(--ds-font-weight-semibold);
+  font-size: 16px;
+  line-height: 22px;
+  color: var(--ds-color-black);
+  margin-block-end: 16px;
+}
+
+.ds-button-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.ds-button-item__label {
+  font-family: var(--ds-font-family);
+  font-weight: var(--ds-font-weight-normal);
+  font-size: 12px;
+  line-height: 17px;
+  color: var(--ds-color-dark-gray);
+}
+
+.ds-button-item img {
+  display: block;
+  height: auto;
+}
+
+/* Responsive */
+@media screen and (max-width: 960px) {
+  .ds-page {
+    padding-inline: 32px;
+  }
+
+  .ds-table__row,
+  .ds-table__header-row {
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+  }
+
+  .ds-table__col-family,
+  .ds-table__col-class,
+  .ds-table__col-label,
+  .ds-table__col-weight-family,
+  .ds-table__col-weight-class {
+    width: auto;
+  }
+
+  .ds-section__title {
+    font-size: 32px;
+    line-height: 40px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .ds-page {
+    padding-inline: 16px;
+  }
+
+  .ds-color-cards {
+    gap: 16px;
+  }
+
+  .ds-color-card {
+    width: calc(33.333% - 11px);
+    min-width: 90px;
+  }
+
+  .ds-font-sample-pair {
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+  }
+}

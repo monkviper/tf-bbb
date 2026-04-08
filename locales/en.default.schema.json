@@ -295,6 +295,7 @@
     "count": "Count",
     "custom_section": "Custom section",
     "description": "Description",
+    "design_system": "Design system",
     // Block name for informational content containers
     "details": "Details",
     "divider": "Divider",

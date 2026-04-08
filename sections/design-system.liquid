@@ -1,0 +1,528 @@
+{{ 'design-system.css' | asset_url | stylesheet_tag }}
+
+<div
+  class="ds-page"
+  style="--ds-padding-top: {{ section.settings.padding_top }}px; --ds-padding-bottom: {{ section.settings.padding_bottom }}px;"
+>
+  {%- comment -%} ========== FONT FAMILIES ========== {%- endcomment -%}
+  <div class="ds-section">
+    <div class="ds-table" style="display: flex; gap: 120px; align-items: center;">
+      <h2 class="ds-section__title ds-section__title--default" style="margin-block-end: 0; flex-shrink: 0;">Font Families</h2>
+      <div style="flex: 1;">
+        <div class="ds-table__header-row">
+          <span class="ds-table__header-cell ds-table__col-family">FAMILY</span>
+          <span class="ds-table__header-cell ds-table__col-class">CLASS</span>
+          <span class="ds-table__header-cell ds-table__col-properties">PROPERTIES</span>
+        </div>
+        <div class="ds-table__row">
+          <span class="ds-table__col-family" style="font-family: var(--ds-font-family); font-weight: var(--ds-font-weight-normal); font-size: 40px; line-height: 48px;">Poppins</span>
+          <span class="ds-table__col-class" style="font-family: var(--ds-font-family); font-weight: var(--ds-font-weight-normal); font-size: 16px; line-height: 22px;">font-sans</span>
+          <span class="ds-table__col-properties" style="font-family: var(--ds-font-family); font-weight: var(--ds-font-weight-normal); font-size: 16px; line-height: 22px;">&quot;Poppins&quot;, sans-serif</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} ========== FONT SIZES ========== {%- endcomment -%}
+  <div class="ds-section">
+    <div style="display: flex; gap: 120px; align-items: flex-start;">
+      <h2 class="ds-section__title ds-section__title--default" style="margin-block-end: 0; flex-shrink: 0;">Font Size</h2>
+      <div class="ds-table" style="flex: 1;">
+        <div class="ds-table__header-row">
+          <span class="ds-table__header-cell ds-table__col-label">CLASS / PROPERTIES</span>
+          <span class="ds-table__header-cell ds-table__col-default">DEFAULT</span>
+        </div>
+
+        {%- comment -%} Display 80px {%- endcomment -%}
+        <div class="ds-table__row">
+          <span class="ds-table__col-label">
+            <span class="ds-table__col-label-text">Display
+font-size: 80px;
+line-height: 100%;</span>
+          </span>
+          <span class="ds-table__col-sample" style="font-family: var(--ds-font-family); font-weight: var(--ds-font-weight-medium); font-size: 80px; line-height: 112px; letter-spacing: -2.4px;">You&rsquo;re a force of nature</span>
+        </div>
+
+        {%- comment -%} H1 48px {%- endcomment -%}
+        <div class="ds-table__row">
+          <span class="ds-table__col-label">
+            <span class="ds-table__col-label-text">H1
+font-size: 48px;
+line-height: 100%;</span>
+          </span>
+          <span class="ds-table__col-sample" style="font-family: var(--ds-font-family); font-weight: var(--ds-font-weight-semibold); font-size: 48px; line-height: 67px; letter-spacing: -0.96px;">You&rsquo;re a force of nature</span>
+        </div>
+
+        {%- comment -%} H2 40px {%- endcomment -%}
+        <div class="ds-table__row">
+          <span class="ds-table__col-label">
+            <span class="ds-table__col-label-text">H2
+font-size: 40px;
+line-height: 100%;</span>
+          </span>
+          <span class="ds-table__col-sample" style="font-family: var(--ds-font-family); font-weight: var(--ds-font-weight-semibold); font-size: 40px; line-height: 56px; letter-spacing: -0.8px;">You&rsquo;re a force of nature</span>
+        </div>
+
+        {%- comment -%} H3 32px {%- endcomment -%}
+        <div class="ds-table__row">
+          <span class="ds-table__col-label">
+            <span class="ds-table__col-label-text">H3
+font-size: 32px;
+line-height: 100%;</span>
+          </span>
+          <span class="ds-table__col-sample" style="font-family: var(--ds-font-family); font-weight: var(--ds-font-weight-semibold); font-size: 32px; line-height: 45px; letter-spacing: -0.64px;">You&rsquo;re a force of nature</span>
+        </div>
+
+        {%- comment -%} H4 24px {%- endcomment -%}
+        <div class="ds-table__row">
+          <span class="ds-table__col-label">
+            <span class="ds-table__col-label-text">H4
+font-size: 24px;
+line-height: 110%;</span>
+          </span>
+          <span class="ds-table__col-sample" style="font-family: var(--ds-font-family); font-weight: var(--ds-font-weight-semibold); font-size: 24px; line-height: 34px; letter-spacing: -0.48px;">You&rsquo;re a force of nature</span>
+        </div>
+
+        {%- comment -%} H5 20px {%- endcomment -%}
+        <div class="ds-table__row">
+          <span class="ds-table__col-label">
+            <span class="ds-table__col-label-text">H5
+font-size: 20px;
+line-height: 110%;</span>
+          </span>
+          <span class="ds-table__col-sample" style="font-family: var(--ds-font-family); font-weight: var(--ds-font-weight-semibold); font-size: 20px; line-height: 28px; letter-spacing: -0.4px;">You&rsquo;re a force of nature</span>
+        </div>
+
+        {%- comment -%} body-regular 16px {%- endcomment -%}
+        <div class="ds-table__row">
+          <span class="ds-table__col-label">
+            <span class="ds-table__col-label-text">body-regular
+font-size: 16px;
+line-height: 140%;
+line-height: 100%;</span>
+          </span>
+          <div class="ds-font-sample-pair">
+            <span style="font-family: var(--ds-font-family); font-weight: var(--ds-font-weight-normal); font-size: 16px; line-height: 22px;">You&rsquo;re a force of nature</span>
+            <span style="font-family: var(--ds-font-family); font-weight: var(--ds-font-weight-semibold); font-size: 16px; line-height: 22px;">You&rsquo;re a force of nature</span>
+          </div>
+        </div>
+
+        {%- comment -%} tag-regular 16px uppercase {%- endcomment -%}
+        <div class="ds-table__row">
+          <span class="ds-table__col-label">
+            <span class="ds-table__col-label-text">tag-regular
+font-size: 16px;
+line-height: 180%;</span>
+          </span>
+          <span class="ds-table__col-sample" style="font-family: var(--ds-font-family); font-weight: var(--ds-font-weight-semibold); font-size: 16px; line-height: 29px; text-transform: uppercase;">You&rsquo;re a force of nature</span>
+        </div>
+
+        {%- comment -%} body-small 14px {%- endcomment -%}
+        <div class="ds-table__row">
+          <span class="ds-table__col-label">
+            <span class="ds-table__col-label-text">body-small
+font-size: 14px;
+line-height: 140%;
+line-height: 100%;</span>
+          </span>
+          <div class="ds-font-sample-pair">
+            <span style="font-family: var(--ds-font-family); font-weight: var(--ds-font-weight-normal); font-size: 14px; line-height: 20px;">You&rsquo;re a force of nature</span>
+            <span style="font-family: var(--ds-font-family); font-weight: var(--ds-font-weight-semibold); font-size: 14px; line-height: 20px;">You&rsquo;re a force of nature</span>
+          </div>
+        </div>
+
+        {%- comment -%} tag-small 14px uppercase {%- endcomment -%}
+        <div class="ds-table__row">
+          <span class="ds-table__col-label">
+            <span class="ds-table__col-label-text">tag-small
+font-size: 14px;
+line-height: 180%;</span>
+          </span>
+          <span class="ds-table__col-sample" style="font-family: var(--ds-font-family); font-weight: var(--ds-font-weight-semibold); font-size: 14px; line-height: 25px; text-transform: uppercase;">You&rsquo;re a force of nature</span>
+        </div>
+
+        {%- comment -%} label 12px {%- endcomment -%}
+        <div class="ds-table__row">
+          <span class="ds-table__col-label">
+            <span class="ds-table__col-label-text">label
+font-size: 12px;
+line-height: 140%;</span>
+          </span>
+          <div class="ds-font-sample-pair">
+            <span style="font-family: var(--ds-font-family); font-weight: var(--ds-font-weight-normal); font-size: 12px; line-height: 17px;">You&rsquo;re a force of nature</span>
+            <span style="font-family: var(--ds-font-family); font-weight: var(--ds-font-weight-semibold); font-size: 12px; line-height: 17px;">You&rsquo;re a force of nature</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} ========== FONT WEIGHTS ========== {%- endcomment -%}
+  <div class="ds-section">
+    <div style="display: flex; gap: 120px; align-items: flex-start;">
+      <h2 class="ds-section__title ds-section__title--default" style="margin-block-end: 0; flex-shrink: 0;">Font Weight</h2>
+      <div class="ds-table" style="flex: 1;">
+        <div class="ds-table__header-row">
+          <span class="ds-table__header-cell ds-table__col-weight-family">FAMILY</span>
+          <span class="ds-table__header-cell ds-table__col-weight-class">CLASS</span>
+          <span class="ds-table__header-cell ds-table__col-weight-properties">PROPERTIES</span>
+        </div>
+
+        <div class="ds-table__row">
+          <span class="ds-table__col-weight-family" style="font-family: var(--ds-font-family); font-weight: var(--ds-font-weight-semibold); font-size: 20px; line-height: 28px; letter-spacing: -0.4px;">Poppins</span>
+          <span class="ds-table__col-weight-class" style="font-family: var(--ds-font-family); font-weight: var(--ds-font-weight-normal); font-size: 16px; line-height: 22px;">font-medium</span>
+          <span class="ds-table__col-weight-properties" style="font-family: var(--ds-font-family); font-weight: var(--ds-font-weight-normal); font-size: 16px; line-height: 22px;">font-weight: 500;</span>
+        </div>
+
+        <div class="ds-table__row">
+          <span class="ds-table__col-weight-family" style="font-family: var(--ds-font-family); font-weight: var(--ds-font-weight-semibold); font-size: 16px; line-height: 22px;">Poppins</span>
+          <span class="ds-table__col-weight-class" style="font-family: var(--ds-font-family); font-weight: var(--ds-font-weight-normal); font-size: 16px; line-height: 22px;">font-semibold</span>
+          <span class="ds-table__col-weight-properties" style="font-family: var(--ds-font-family); font-weight: var(--ds-font-weight-normal); font-size: 16px; line-height: 22px;">font-weight: 600;</span>
+        </div>
+
+        <div class="ds-table__row">
+          <span class="ds-table__col-weight-family" style="font-family: var(--ds-font-family); font-weight: var(--ds-font-weight-normal); font-size: 16px; line-height: 22px;">Poppins</span>
+          <span class="ds-table__col-weight-class" style="font-family: var(--ds-font-family); font-weight: var(--ds-font-weight-normal); font-size: 16px; line-height: 22px;">font-normal</span>
+          <span class="ds-table__col-weight-properties" style="font-family: var(--ds-font-family); font-weight: var(--ds-font-weight-normal); font-size: 16px; line-height: 22px;">font-weight: 400;</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} ========== BRAND COLORS ========== {%- endcomment -%}
+  <div class="ds-section">
+    <h2 class="ds-section__title ds-section__title--brand">Brand Colors</h2>
+
+    {%- comment -%} Core Colors {%- endcomment -%}
+    <div class="ds-color-group">
+      <h3 class="ds-color-group__title" style="color: var(--ds-color-dark-blue);">Core Colors</h3>
+      <div class="ds-color-cards">
+        {%- comment -%} Dark Blue {%- endcomment -%}
+        <div class="ds-color-card">
+          <div class="ds-color-card__swatch" style="background-color: var(--ds-color-dark-blue);">
+            <span class="ds-color-card__name" style="color: var(--ds-color-white);">Dark Blue</span>
+          </div>
+          <div class="ds-color-card__details">
+            <span class="ds-color-card__hex" style="color: var(--ds-color-dark-blue);">#081D4D</span>
+          </div>
+        </div>
+
+        {%- comment -%} Royal Blue {%- endcomment -%}
+        <div class="ds-color-card">
+          <div class="ds-color-card__swatch" style="background-color: var(--ds-color-royal-blue);">
+            <span class="ds-color-card__name" style="color: var(--ds-color-white);">Royal Blue</span>
+          </div>
+          <div class="ds-color-card__details">
+            <span class="ds-color-card__hex" style="color: #000000;">#001F5F</span>
+          </div>
+        </div>
+
+        {%- comment -%} Blue {%- endcomment -%}
+        <div class="ds-color-card">
+          <div class="ds-color-card__swatch" style="background-color: var(--ds-color-blue);">
+            <span class="ds-color-card__name" style="color: var(--ds-color-white);">Blue</span>
+          </div>
+          <div class="ds-color-card__details">
+            <span class="ds-color-card__hex" style="color: var(--ds-color-dark-blue);">#02267E</span>
+          </div>
+        </div>
+
+        {%- comment -%} Medium Blue {%- endcomment -%}
+        <div class="ds-color-card">
+          <div class="ds-color-card__swatch" style="background-color: var(--ds-color-medium-blue);">
+            <span class="ds-color-card__name" style="color: var(--ds-color-white);">Medium Blue</span>
+          </div>
+          <div class="ds-color-card__details">
+            <span class="ds-color-card__hex" style="color: var(--ds-color-dark-blue);">#013C82</span>
+          </div>
+        </div>
+
+        {%- comment -%} Light Blue {%- endcomment -%}
+        <div class="ds-color-card">
+          <div class="ds-color-card__swatch" style="background-color: var(--ds-color-light-blue);">
+            <span class="ds-color-card__name" style="color: var(--ds-color-white);">Light Blue</span>
+          </div>
+          <div class="ds-color-card__details">
+            <span class="ds-color-card__hex" style="color: var(--ds-color-dark-blue);">#005695</span>
+          </div>
+        </div>
+
+        {%- comment -%} Lightest Blue {%- endcomment -%}
+        <div class="ds-color-card">
+          <div class="ds-color-card__swatch" style="background-color: var(--ds-color-lightest-blue);">
+            <span class="ds-color-card__name" style="color: var(--ds-color-black);">Lightest Blue</span>
+          </div>
+          <div class="ds-color-card__details">
+            <span class="ds-color-card__hex" style="color: var(--ds-color-dark-blue);">#DCE4F0</span>
+          </div>
+        </div>
+
+        {%- comment -%} Black {%- endcomment -%}
+        <div class="ds-color-card">
+          <div class="ds-color-card__swatch" style="background-color: var(--ds-color-black);">
+            <span class="ds-color-card__name" style="color: var(--ds-color-white);">Black</span>
+          </div>
+          <div class="ds-color-card__details">
+            <span class="ds-color-card__hex" style="color: var(--ds-color-dark-blue);">#151515</span>
+          </div>
+        </div>
+
+        {%- comment -%} Light Red {%- endcomment -%}
+        <div class="ds-color-card">
+          <div class="ds-color-card__swatch" style="background-color: var(--ds-color-light-red);">
+            <span class="ds-color-card__name" style="color: var(--ds-color-dark-blue);">Light Red</span>
+          </div>
+          <div class="ds-color-card__details">
+            <span class="ds-color-card__shade">50</span>
+            <span class="ds-color-card__hex" style="color: var(--ds-color-black);">#FFEEED</span>
+          </div>
+        </div>
+
+        {%- comment -%} Red {%- endcomment -%}
+        <div class="ds-color-card">
+          <div class="ds-color-card__swatch" style="background-color: var(--ds-color-red);">
+            <span class="ds-color-card__name" style="color: var(--ds-color-dark-blue);">Red</span>
+          </div>
+          <div class="ds-color-card__details">
+            <span class="ds-color-card__shade">950</span>
+            <span class="ds-color-card__hex" style="color: var(--ds-color-black);">#D90400</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {%- comment -%} Black / Grayscale {%- endcomment -%}
+    <div class="ds-color-group">
+      <h3 class="ds-color-group__title" style="color: var(--ds-color-dark-blue);">Black</h3>
+      <div class="ds-color-cards">
+        <div class="ds-color-card">
+          <div class="ds-color-card__swatch" style="background-color: var(--ds-color-black);">
+            <span class="ds-color-card__name" style="color: var(--ds-color-white);">Black</span>
+          </div>
+          <div class="ds-color-card__details">
+            <span class="ds-color-card__hex" style="color: var(--ds-color-dark-blue);">#151515</span>
+          </div>
+        </div>
+
+        <div class="ds-color-card">
+          <div class="ds-color-card__swatch" style="background-color: var(--ds-color-dark-gray);">
+            <span class="ds-color-card__name" style="color: var(--ds-color-white);">Dark Gray</span>
+          </div>
+          <div class="ds-color-card__details">
+            <span class="ds-color-card__hex" style="color: var(--ds-color-dark-blue);">#4F5055</span>
+          </div>
+        </div>
+
+        <div class="ds-color-card">
+          <div class="ds-color-card__swatch" style="background-color: var(--ds-color-medium-gray);">
+            <span class="ds-color-card__name" style="color: var(--ds-color-white);">Medium Gray</span>
+          </div>
+          <div class="ds-color-card__details">
+            <span class="ds-color-card__hex" style="color: var(--ds-color-dark-blue);">#888B95</span>
+          </div>
+        </div>
+
+        <div class="ds-color-card">
+          <div class="ds-color-card__swatch" style="background-color: var(--ds-color-light-gray);"></div>
+          <div class="ds-color-card__details">
+            <span class="ds-color-card__hex" style="color: var(--ds-color-dark-blue);">#A7A9B4</span>
+          </div>
+        </div>
+
+        <div class="ds-color-card">
+          <div class="ds-color-card__swatch" style="background-color: var(--ds-color-lighter-gray);"></div>
+          <div class="ds-color-card__details">
+            <span class="ds-color-card__hex" style="color: var(--ds-color-dark-blue);">#C9CAD4</span>
+          </div>
+        </div>
+
+        <div class="ds-color-card">
+          <div class="ds-color-card__swatch" style="background-color: var(--ds-color-lightest-gray);">
+            <span class="ds-color-card__name" style="color: var(--ds-color-dark-blue);">Lightest Gray</span>
+          </div>
+          <div class="ds-color-card__details">
+            <span class="ds-color-card__hex" style="color: var(--ds-color-dark-blue);">#F2F2F2</span>
+          </div>
+        </div>
+
+        <div class="ds-color-card">
+          <div class="ds-color-card__swatch" style="background-color: var(--ds-color-white);"></div>
+          <div class="ds-color-card__details">
+            <span class="ds-color-card__hex" style="color: var(--ds-color-dark-blue);">#FFFFFF</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} ========== SUPPORTING COLORS ========== {%- endcomment -%}
+  <div class="ds-section">
+    <h2 class="ds-section__title ds-section__title--default">Supporting Colors</h2>
+
+    {%- comment -%} Warning {%- endcomment -%}
+    <div class="ds-color-group">
+      <h3 class="ds-color-group__title ds-color-group__title--default">Warning</h3>
+      <div class="ds-color-cards">
+        {%- assign warning_shades = '50,100,200,300,400,500,600,700,800,900,950' | split: ',' -%}
+        {%- assign warning_hexes = 'FEFEF6,FEFCEF,FCF9E1,FBF6D3,FAF2C5,F9EDB7,F7E8A9,F6E39B,F5DD8D,F3D476,F2CF6A' | split: ',' -%}
+        {%- for i in (0..10) -%}
+          <div class="ds-color-card">
+            <div class="ds-color-card__swatch" style="background-color: #{{ warning_hexes[i] }};"></div>
+            <div class="ds-color-card__details">
+              <span class="ds-color-card__shade">{{ warning_shades[i] }}</span>
+              <span class="ds-color-card__hex" style="color: var(--ds-color-black);">#{{ warning_hexes[i] }}</span>
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+
+    {%- comment -%} Error {%- endcomment -%}
+    <div class="ds-color-group">
+      <h3 class="ds-color-group__title ds-color-group__title--default">Error</h3>
+      <div class="ds-color-cards">
+        {%- assign error_shades = '50,100,200,300,400,500,600,700,800,900,950' | split: ',' -%}
+        {%- assign error_hexes = 'FFEEED,FFE1E1,FFC8C7,FFAFAE,FF9694,FF7D7B,FF6461,FF4B48,FF322E,F50500,D90400' | split: ',' -%}
+        {%- for i in (0..10) -%}
+          <div class="ds-color-card">
+            <div class="ds-color-card__swatch" style="background-color: #{{ error_hexes[i] }};"></div>
+            <div class="ds-color-card__details">
+              <span class="ds-color-card__shade">{{ error_shades[i] }}</span>
+              <span class="ds-color-card__hex" style="color: var(--ds-color-black);">#{{ error_hexes[i] }}</span>
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+
+    {%- comment -%} Success {%- endcomment -%}
+    <div class="ds-color-group">
+      <h3 class="ds-color-group__title ds-color-group__title--default">Success</h3>
+      <div class="ds-color-cards">
+        {%- assign success_shades = '50,100,200,300,400,500,600,700,800,900,950' | split: ',' -%}
+        {%- assign success_hexes = 'EEF5EC,E4EFE0,D0E3C8,BCD7B1,A7CB99,93BF81,7FB36A,6BA554,5C8D48,446835,38552C' | split: ',' -%}
+        {%- for i in (0..10) -%}
+          <div class="ds-color-card">
+            <div class="ds-color-card__swatch" style="background-color: #{{ success_hexes[i] }};"></div>
+            <div class="ds-color-card__details">
+              <span class="ds-color-card__shade">{{ success_shades[i] }}</span>
+              <span class="ds-color-card__hex" style="color: var(--ds-color-black);">#{{ success_hexes[i] }}</span>
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} ========== BUTTONS ========== {%- endcomment -%}
+  <div class="ds-section">
+    <h2 class="ds-section__title ds-section__title--default">Buttons</h2>
+
+    {%- comment -%} Filled Buttons {%- endcomment -%}
+    <div class="ds-button-row">
+      <h3 class="ds-button-row__title">Filled</h3>
+      <div class="ds-button-grid">
+        <div class="ds-button-item">
+          <span class="ds-button-item__label">Default</span>
+          <img src="{{ 'size-40-state-default-icon-left-false-icon-right-false-type-filled.svg' | asset_url }}" alt="Filled button default" width="94" height="40" loading="lazy">
+        </div>
+        <div class="ds-button-item">
+          <span class="ds-button-item__label">Hover</span>
+          <img src="{{ 'size-40-state-hover-icon-left-false-icon-right-false-type-filled.svg' | asset_url }}" alt="Filled button hover" width="94" height="40" loading="lazy">
+        </div>
+        <div class="ds-button-item">
+          <span class="ds-button-item__label">Disabled</span>
+          <img src="{{ 'size-40-state-disabled-icon-left-false-icon-right-false-type-filled.svg' | asset_url }}" alt="Filled button disabled" width="94" height="40" loading="lazy">
+        </div>
+        <div class="ds-button-item">
+          <span class="ds-button-item__label">With icon (left)</span>
+          <img src="{{ 'size-40-state-default-icon-left-true-icon-right-false-type-filled.svg' | asset_url }}" alt="Filled button with left icon" width="122" height="40" loading="lazy">
+        </div>
+        <div class="ds-button-item">
+          <span class="ds-button-item__label">With icon (right)</span>
+          <img src="{{ 'size-40-state-default-icon-left-false-icon-right-true-type-filled.svg' | asset_url }}" alt="Filled button with right icon" width="122" height="40" loading="lazy">
+        </div>
+      </div>
+    </div>
+
+    {%- comment -%} Stroke Buttons {%- endcomment -%}
+    <div class="ds-button-row">
+      <h3 class="ds-button-row__title">Stroke</h3>
+      <div class="ds-button-grid">
+        <div class="ds-button-item">
+          <span class="ds-button-item__label">Default</span>
+          <img src="{{ 'size-40-state-default-icon-left-false-icon-right-false-type-stroke.svg' | asset_url }}" alt="Stroke button default" width="94" height="40" loading="lazy">
+        </div>
+        <div class="ds-button-item">
+          <span class="ds-button-item__label">Hover</span>
+          <img src="{{ 'size-40-state-hover-icon-left-false-icon-right-false-type-stroke.svg' | asset_url }}" alt="Stroke button hover" width="94" height="40" loading="lazy">
+        </div>
+        <div class="ds-button-item">
+          <span class="ds-button-item__label">Disabled</span>
+          <img src="{{ 'size-40-state-disabled-icon-left-false-icon-right-false-type-stroke.svg' | asset_url }}" alt="Stroke button disabled" width="94" height="40" loading="lazy">
+        </div>
+        <div class="ds-button-item">
+          <span class="ds-button-item__label">With icon (left)</span>
+          <img src="{{ 'size-40-state-default-icon-left-true-icon-right-false-type-stroke.svg' | asset_url }}" alt="Stroke button with left icon" width="122" height="40" loading="lazy">
+        </div>
+        <div class="ds-button-item">
+          <span class="ds-button-item__label">With icon (right)</span>
+          <img src="{{ 'size-40-state-default-icon-left-false-icon-right-true-type-stroke.svg' | asset_url }}" alt="Stroke button with right icon" width="122" height="40" loading="lazy">
+        </div>
+      </div>
+    </div>
+
+    {%- comment -%} Text Buttons {%- endcomment -%}
+    <div class="ds-button-row">
+      <h3 class="ds-button-row__title">Text</h3>
+      <div class="ds-button-grid">
+        <div class="ds-button-item">
+          <span class="ds-button-item__label">Default</span>
+          <img src="{{ 'size-40-state-default-icon-left-false-icon-right-false-type-text.svg' | asset_url }}" alt="Text button default" width="55" height="23" loading="lazy">
+        </div>
+        <div class="ds-button-item">
+          <span class="ds-button-item__label">Hover</span>
+          <img src="{{ 'size-40-state-hover-icon-left-false-icon-right-false-type-text.svg' | asset_url }}" alt="Text button hover" width="55" height="23" loading="lazy">
+        </div>
+        <div class="ds-button-item">
+          <span class="ds-button-item__label">Disabled</span>
+          <img src="{{ 'size-40-state-disabled-icon-left-false-icon-right-false-type-text.svg' | asset_url }}" alt="Text button disabled" width="55" height="23" loading="lazy">
+        </div>
+        <div class="ds-button-item">
+          <span class="ds-button-item__label">With icon (right)</span>
+          <img src="{{ 'size-40-state-default-icon-left-false-icon-right-true-type-text.svg' | asset_url }}" alt="Text button with right icon" width="83" height="23" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:names.design_system",
+  "tag": "section",
+  "class": "section-wrapper",
+  "settings": [
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "default": 64,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "default": 64,
+      "unit": "px"
+    }
+  ]
+}
+{% endschema %}
