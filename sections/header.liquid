@@ -69,7 +69,7 @@
   endcapture
 
   capture actions
-    render 'header-actions', customer_account_menu: section.settings.customer_account_menu, display_style: section.settings.actions_display_style, section: section, phone_cta: phone_cta_html
+    render 'header-actions', customer_account_menu: section.settings.customer_account_menu, display_style: section.settings.actions_display_style, section: section
   endcapture
 
   if shop.customer_accounts_enabled
@@ -101,6 +101,9 @@
     endif
   endif
   capture search
+    if phone_cta_html != blank
+      echo phone_cta_html
+    endif
     render 'search', style: search_style, class: search_class, display_style: section.settings.actions_display_style
   endcapture
 
