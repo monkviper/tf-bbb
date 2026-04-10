@@ -10,8 +10,6 @@
 {% liquid
   assign slide_index = section.blocks | find_index: 'id', block.id
   assign total_slides = section.blocks.size
-  assign content_position_desktop = section.settings.content_position_desktop | default: 'bottom-left'
-  assign content_position_mobile = section.settings.content_position_mobile | default: 'top-left'
   assign content_alignment_desktop = section.settings.content_alignment_desktop | default: 'left'
   assign content_alignment_mobile = section.settings.content_alignment_mobile | default: 'left'
 %}
@@ -19,7 +17,7 @@
 <div
   class="hero-carousel__slide{% if slide_index == 0 %} hero-carousel__slide--active{% endif %}"
   {{ block.shopify_attributes }}
-  ref="slides"
+  ref="slides[]"
   role="group"
   aria-roledescription="slide"
   aria-label="{{ 'accessibility.hero_carousel_slide_status' | t: current: slide_index | plus: 1, total: total_slides }}"

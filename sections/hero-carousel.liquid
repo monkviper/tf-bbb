@@ -14,34 +14,34 @@
 
   case pos_vertical_desktop
     when 'top'
-      assign justify_desktop = 'flex-start'
+      assign align_desktop = 'flex-start'
     when 'center'
-      assign justify_desktop = 'center'
+      assign align_desktop = 'center'
     when 'bottom'
-      assign justify_desktop = 'flex-end'
+      assign align_desktop = 'flex-end'
   endcase
 
   case pos_horizontal_desktop
     when 'left'
-      assign align_desktop = 'flex-start'
+      assign justify_desktop = 'flex-start'
     when 'center'
-      assign align_desktop = 'center'
+      assign justify_desktop = 'center'
   endcase
 
   case pos_vertical_mobile
     when 'top'
-      assign justify_mobile = 'flex-start'
+      assign align_mobile = 'flex-start'
     when 'center'
-      assign justify_mobile = 'center'
+      assign align_mobile = 'center'
     when 'bottom'
-      assign justify_mobile = 'flex-end'
+      assign align_mobile = 'flex-end'
   endcase
 
   case pos_horizontal_mobile
     when 'left'
-      assign align_mobile = 'flex-start'
+      assign justify_mobile = 'flex-start'
     when 'center'
-      assign align_mobile = 'center'
+      assign justify_mobile = 'center'
   endcase
 %}
 
@@ -88,7 +88,7 @@
           %}
           <button
             class="hero-carousel__thumbnail{% if forloop.index0 == 0 %} hero-carousel__thumbnail--active{% endif %}"
-            ref="thumbnails"
+            ref="thumbnails[]"
             on:click="/select/{{ forloop.index0 }}"
             aria-label="{{ 'accessibility.slide_status' | t: index: forloop.index, length: total_slides }}"
             aria-current="{% if forloop.index0 == 0 %}true{% else %}false{% endif %}"
@@ -110,7 +110,7 @@
               <span class="hero-carousel__thumbnail-overlay"></span>
             </span>
             <span class="hero-carousel__progress-track">
-              <span class="hero-carousel__progress-fill" ref="progressFills"></span>
+              <span class="hero-carousel__progress-fill" ref="progressFills[]"></span>
             </span>
           </button>
         {% endfor %}
@@ -169,7 +169,8 @@
 .hero-carousel__slides {
   position: relative;
   width: 100%;
-  min-height: 400px;
+  height: 560px;
+  overflow: hidden;
 }
 
 .hero-carousel__slide {
@@ -230,10 +231,12 @@
   inset: 0;
   z-index: 2;
   display: flex;
+  flex-wrap: wrap;
   padding: 48px 64px;
   pointer-events: none;
   justify-content: var(--content-justify-desktop);
   align-items: var(--content-align-desktop);
+  align-content: var(--content-align-desktop);
   text-align: var(--content-alignment-desktop, left);
 }
 
@@ -447,41 +450,43 @@
 
 /* Section height variants — default is medium */
 .hero-carousel-wrapper .hero-carousel__slides {
-  min-height: 560px;
+  height: 560px;
 }
 
 .hero-carousel-wrapper[style*="--section-height: auto"] {
   .hero-carousel__slides {
-    min-height: auto;
+    height: auto;
+    min-height: 400px;
   }
 }
 
 .hero-carousel-wrapper[style*="--section-height: small"] {
   .hero-carousel__slides {
-    min-height: 400px;
+    height: 400px;
   }
 }
 
 .hero-carousel-wrapper[style*="--section-height: large"] {
   .hero-carousel__slides {
-    min-height: 720px;
+    height: 720px;
   }
 }
 
 /* Mobile styles */
 @media screen and (max-width: 749px) {
   .hero-carousel__slides {
-    min-height: 503px;
+    height: 503px;
   }
 
   .hero-carousel-wrapper .hero-carousel__slides {
-    min-height: 503px;
+    height: 503px;
   }
 
   .hero-carousel__content {
     padding: 24px 16px 284px 16px;
     justify-content: var(--content-justify-mobile);
     align-items: var(--content-align-mobile);
+    align-content: var(--content-align-mobile);
     text-align: var(--content-alignment-mobile, left);
   }
 
