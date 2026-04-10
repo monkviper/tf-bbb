@@ -54,6 +54,7 @@
   style="
     --padding-block-start: {{ section.settings.padding-block-start }}px;
     --padding-block-end: {{ section.settings.padding-block-end }}px;
+    --section-height: {{ section.settings.section_height }};
     --content-justify-desktop: {{ justify_desktop }};
     --content-align-desktop: {{ align_desktop }};
     --content-justify-mobile: {{ justify_mobile }};
@@ -119,6 +120,8 @@
           ref="playPauseBtn"
           on:click="/togglePlayPause"
           aria-label="{{ 'accessibility.hero_carousel_pause' | t }}"
+          data-pause-label="{{ 'accessibility.hero_carousel_pause' | t }}"
+          data-play-label="{{ 'accessibility.hero_carousel_play' | t }}"
           type="button"
         >
           <span class="hero-carousel__pause-icon">
@@ -136,6 +139,16 @@
               width="20"
               height="20"
             >
+          </span>
+          <span class="hero-carousel__play-icon">
+            <svg class="hero-carousel__pp-icon hero-carousel__pp-icon--desktop" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle cx="12" cy="12" r="11" stroke="currentColor" stroke-width="1.5"/>
+              <polygon points="10,7 17,12 10,17" fill="currentColor"/>
+            </svg>
+            <svg class="hero-carousel__pp-icon hero-carousel__pp-icon--mobile" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.5"/>
+              <polygon points="8.5,6 15,10 8.5,14" fill="currentColor"/>
+            </svg>
           </span>
         </button>
       </div>
@@ -415,21 +428,44 @@
   height: 24px;
 }
 
-/* Section height variants */
+/* Play/pause icon toggle */
+.hero-carousel__play-icon {
+  display: none;
+}
+
+.hero-carousel__pause-icon {
+  display: flex;
+}
+
+.hero-carousel-wrapper.is-paused .hero-carousel__pause-icon {
+  display: none;
+}
+
+.hero-carousel-wrapper.is-paused .hero-carousel__play-icon {
+  display: flex;
+}
+
+/* Section height variants — default is medium */
 .hero-carousel-wrapper .hero-carousel__slides {
   min-height: 560px;
 }
 
-.hero-carousel-wrapper[style*="--section-height: auto"] .hero-carousel__slides {
-  min-height: auto;
+.hero-carousel-wrapper[style*="--section-height: auto"] {
+  .hero-carousel__slides {
+    min-height: auto;
+  }
 }
 
-.hero-carousel-wrapper[style*="--section-height: small"] .hero-carousel__slides {
-  min-height: 400px;
+.hero-carousel-wrapper[style*="--section-height: small"] {
+  .hero-carousel__slides {
+    min-height: 400px;
+  }
 }
 
-.hero-carousel-wrapper[style*="--section-height: large"] .hero-carousel__slides {
-  min-height: 720px;
+.hero-carousel-wrapper[style*="--section-height: large"] {
+  .hero-carousel__slides {
+    min-height: 720px;
+  }
 }
 
 /* Mobile styles */

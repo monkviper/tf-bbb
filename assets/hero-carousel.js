@@ -173,11 +173,23 @@ class HeroCarousel extends Component {
       this.wasManuallyPaused = true;
       this.stopProgress();
       this.classList.add('is-paused');
+
+      if (this.refs.playPauseBtn) {
+        this.refs.playPauseBtn.setAttribute('aria-label',
+          this.refs.playPauseBtn.dataset.playLabel || 'Play slideshow'
+        );
+      }
     } else {
       this.isPlaying = true;
       this.wasManuallyPaused = false;
       this.startProgress();
       this.classList.remove('is-paused');
+
+      if (this.refs.playPauseBtn) {
+        this.refs.playPauseBtn.setAttribute('aria-label',
+          this.refs.playPauseBtn.dataset.pauseLabel || 'Pause slideshow'
+        );
+      }
     }
   }
 
