@@ -1,5 +1,5 @@
 {%- liquid
-  assign active_tab = 0
+  assign products_to_show = section.settings.products_to_show
   assign blocks_size = section.blocks.size
 -%}
 
@@ -8,106 +8,106 @@
   class="section section--{{ section.settings.section_width }} spacing-style color-{{ section.settings.color_scheme }}"
   style="{% render 'spacing-style', settings: section.settings %}"
 >
-  <div class="tc-wrapper">
-    <div class="tc-header">
-      {%- if section.settings.heading != blank -%}
-        <h2 class="tc-heading">{{ section.settings.heading | escape }}</h2>
-      {%- endif -%}
+  <div class="tabbed-collection">
+    <div class="tabbed-collection__header">
+      {% if section.settings.heading != blank %}
+        <h2 class="tabbed-collection__heading">{{ section.settings.heading | escape }}</h2>
+      {% endif %}
 
-      {%- if blocks_size > 0 -%}
-        <div class="tc-tabs" role="tablist" aria-label="{{ section.settings.heading | escape }}">
-          {%- for block in section.blocks -%}
+      {% if blocks_size > 0 %}
+        <div class="tabbed-collection__tabs" role="tablist" aria-label="{{ section.settings.heading | escape }}">
+          {% for block in section.blocks %}
             <button
-              class="tc-tab{% if forloop.index0 == active_tab %} tc-tab--active{% endif %}"
               role="tab"
-              aria-selected="{% if forloop.index0 == active_tab %}true{% else %}false{% endif %}"
-              aria-controls="tc-panel-{{ section.id }}-{{ forloop.index0 }}"
-              id="tc-tab-{{ section.id }}-{{ forloop.index0 }}"
+              ref="tab[]"
+              on:click="/handleTabClick/{{ forloop.index0 }}"
+              class="tabbed-collection__tab{% if forloop.index0 == 0 %} tabbed-collection__tab--active{% endif %}"
+              aria-selected="{% if forloop.index0 == 0 %}true{% else %}false{% endif %}"
+              aria-controls="tabbed-collection-panel-{{ section.id }}-{{ forloop.index0 }}"
               data-tab-index="{{ forloop.index0 }}"
-              on:click="/handleTabClick"
+              id="tabbed-collection-tab-{{ section.id }}-{{ forloop.index0 }}"
               {{ block.shopify_attributes }}
             >
               {{ block.settings.label | escape }}
             </button>
-          {%- endfor -%}
+          {% endfor %}
         </div>
-      {%- endif -%}
+      {% endif %}
 
-      {%- for block in section.blocks -%}
-        <p
-          class="tc-description{% unless forloop.index0 == active_tab %} tc-description--hidden{% endunless %}"
-          data-tab-description="{{ forloop.index0 }}"
-          id="tc-desc-{{ section.id }}-{{ forloop.index0 }}"
-        >
-          {%- if block.settings.description != blank -%}
+      {% for block in section.blocks %}
+        {% if block.settings.description != blank %}
+          <p
+            ref="description[]"
+            class="tabbed-collection__description"
+            data-tab-index="{{ forloop.index0 }}"
+            {% if forloop.index0 != 0 %}hidden{% endif %}
+          >
             {{ block.settings.description | escape }}
-          {%- endif -%}
-        </p>
-      {%- endfor -%}
+          </p>
+        {% endif %}
+      {% endfor %}
     </div>
 
-    {%- for block in section.blocks -%}
-      {%- assign collection = block.settings.collection -%}
+    {% for block in section.blocks %}
+      {%- assign tab_collection = block.settings.collection -%}
       <div
-        class="tc-products{% unless forloop.index0 == active_tab %} tc-products--hidden{% endunless %}"
+        ref="panel[]"
         role="tabpanel"
-        id="tc-panel-{{ section.id }}-{{ forloop.index0 }}"
-        aria-labelledby="tc-tab-{{ section.id }}-{{ forloop.index0 }}"
-        data-tab-panel="{{ forloop.index0 }}"
+        id="tabbed-collection-panel-{{ section.id }}-{{ forloop.index0 }}"
+        aria-labelledby="tabbed-collection-tab-{{ section.id }}-{{ forloop.index0 }}"
+        class="tabbed-collection__grid"
+        data-tab-index="{{ forloop.index0 }}"
+        {% if forloop.index0 != 0 %}hidden{% endif %}
       >
-        {%- if collection != blank and collection.products.size > 0 -%}
-          {%- for product in collection.products limit: section.settings.products_to_show -%}
+        {% if tab_collection != blank %}
+          {% for product in tab_collection.products limit: products_to_show %}
             {% render 'tabbed-collection-card',
               product: product,
               show_badge: section.settings.show_badge,
               badge_text: section.settings.badge_text,
               quickview_label: section.settings.quickview_label
             %}
-          {%- endfor -%}
-        {%- else -%}
-          {%- for i in (1..section.settings.products_to_show) -%}
-            <div class="tc-card tc-card--placeholder">
-              <div class="tc-card__media">
-                {{ 'product-1' | placeholder_svg_tag: 'tc-card__placeholder-svg' }}
+          {% endfor %}
+        {% else %}
+          {% for i in (1..products_to_show) %}
+            <article class="tabbed-card tabbed-card--placeholder">
+              <div class="tabbed-card__media">
+                {{ 'product-1' | placeholder_svg_tag: 'tabbed-card__placeholder-svg' }}
               </div>
-              <div class="tc-card__content">
-                <div class="tc-card__info">
-                  <h3 class="tc-card__title">{{ 'general.card.product_title' | t | default: 'Example product title' }}</h3>
-                  <div class="tc-card__price">
-                    <span class="tc-card__price-sale">{{ 67900 | money }}</span>
+              <div class="tabbed-card__content">
+                <div class="tabbed-card__info">
+                  <h3 class="tabbed-card__title">{{ 'content.product_card_placeholder' | t }}</h3>
+                  <div class="tabbed-card__price">
+                    <span class="tabbed-card__price-sale">{{ 0 | money }}</span>
                   </div>
                 </div>
               </div>
-            </div>
-          {%- endfor -%}
-        {%- endif -%}
+            </article>
+          {% endfor %}
+        {% endif %}
       </div>
-    {%- endfor -%}
+    {% endfor %}
   </div>
 </tabbed-collection>
 
 {% stylesheet %}
-  tabbed-collection {
-    display: block;
-    box-shadow: inset 0 20px 20px rgba(0, 0, 0, 0.03);
-  }
-
-  .tc-wrapper {
+  .tabbed-collection {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 40px;
   }
 
-  .tc-header {
+  .tabbed-collection__header {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 24px;
+    max-width: 1030px;
     width: 100%;
   }
 
-  .tc-heading {
+  .tabbed-collection__heading {
     font-family: var(--ds-font-family, 'Poppins', sans-serif);
     font-weight: var(--ds-font-weight-semibold, 600);
     font-size: 32px;
@@ -118,14 +118,15 @@
     margin: 0;
   }
 
-  .tc-tabs {
+  .tabbed-collection__tabs {
     display: flex;
     flex-direction: row;
     align-items: center;
+    border: 1px solid var(--ds-color-medium-gray, #888B95);
+    border-radius: 4px;
     overflow-x: auto;
     scrollbar-width: none;
     -ms-overflow-style: none;
-    border-bottom: 1px solid var(--ds-color-medium-gray, #888B95);
     max-width: 100%;
 
     &::-webkit-scrollbar {
@@ -133,39 +134,43 @@
     }
   }
 
-  .tc-tab {
-    flex-shrink: 0;
-    padding: 8px 24px;
+  .tabbed-collection__tab {
     font-family: var(--ds-font-family, 'Poppins', sans-serif);
     font-weight: var(--ds-font-weight-normal, 400);
     font-size: 16px;
     line-height: 22px;
     color: var(--ds-color-medium-gray, #888B95);
     background: none;
-    border: none;
-    border-bottom: 2px solid transparent;
+    border: 1px solid var(--ds-color-medium-gray, #888B95);
+    padding: 8px 24px;
     cursor: pointer;
     white-space: nowrap;
-    margin-bottom: -1px;
-    transition: color 0.2s ease, border-color 0.2s ease;
+    margin-inline-start: -1px;
+    transition: color 0.15s ease, border-color 0.15s ease;
+
+    &:first-child {
+      margin-inline-start: 0;
+    }
 
     &:hover {
-      color: var(--ds-color-dark-gray, #4F5055);
+      color: var(--ds-color-black, #151515);
     }
 
     &:focus-visible {
       outline: 2px solid var(--ds-color-light-blue, #005695);
       outline-offset: -2px;
+      z-index: 1;
     }
   }
 
-  .tc-tab--active {
+  .tabbed-collection__tab--active {
     font-weight: var(--ds-font-weight-semibold, 600);
     color: var(--ds-color-black, #151515);
-    border-bottom-color: var(--ds-color-light-blue, #005695);
+    border-color: var(--ds-color-light-blue, #005695);
+    z-index: 1;
   }
 
-  .tc-description {
+  .tabbed-collection__description {
     font-family: var(--ds-font-family, 'Poppins', sans-serif);
     font-weight: var(--ds-font-weight-normal, 400);
     font-size: 16px;
@@ -176,136 +181,114 @@
     max-width: 1308px;
   }
 
-  .tc-description--hidden {
-    display: none;
-  }
-
-  .tc-products {
+  .tabbed-collection__grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     gap: 32px;
     width: 100%;
   }
 
-  .tc-products--hidden {
+  .tabbed-collection__grid[hidden] {
     display: none;
   }
 
-  /* Product card styles */
-  .tc-card {
+  .tabbed-collection__description[hidden] {
+    display: none;
+  }
+
+  /* Card styles */
+  .tabbed-card {
     position: relative;
     display: flex;
     flex-direction: column;
     gap: 0;
   }
 
-  .tc-card__link {
+  .tabbed-card__link {
     position: absolute;
     inset: 0;
     z-index: 1;
   }
 
-  .tc-card__media {
+  .tabbed-card__media {
     position: relative;
     border-radius: 4px;
     overflow: hidden;
-    background: var(--ds-color-lightest-gray, #F2F2F2);
-    aspect-ratio: 303 / 308;
+    background-color: var(--ds-color-lightest-gray, #F2F2F2);
   }
 
-  .tc-card__image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  .tabbed-card__image {
     display: block;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 4px;
   }
 
-  .tc-card__placeholder-svg {
+  .tabbed-card__placeholder {
+    aspect-ratio: 303 / 308;
+    background-color: var(--ds-color-lightest-gray, #F2F2F2);
+    border-radius: 4px;
+  }
+
+  .tabbed-card__placeholder-svg {
     width: 100%;
     height: 100%;
   }
 
-  .tc-card__badge {
+  .tabbed-card__badge {
     position: absolute;
     top: 8px;
     inset-inline-start: 8px;
-    z-index: 2;
-    padding: 2px 10px;
-    border-radius: 4px;
-    background: var(--ds-color-lightest-blue, #DCE4F0);
-    color: var(--ds-color-light-blue, #005695);
     font-family: var(--ds-font-family, 'Poppins', sans-serif);
     font-weight: var(--ds-font-weight-normal, 400);
     font-size: 12px;
     line-height: 17px;
-    white-space: nowrap;
-  }
-
-  .tc-card__icons {
-    position: absolute;
-    top: 8px;
-    inset-inline-end: 8px;
+    color: var(--ds-color-light-blue, #005695);
+    background-color: var(--ds-color-lightest-blue, #DCE4F0);
+    padding: 2px 10px;
+    border-radius: 4px;
     z-index: 2;
-    display: flex;
-    flex-direction: row;
-    gap: 8px;
   }
 
-  .tc-card__icon-circle {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 24px;
-    height: 24px;
-    border-radius: 48px;
-    background: var(--ds-color-white, #FFFFFF);
-
-    img {
-      width: 16px;
-      height: 16px;
-      object-fit: contain;
-    }
-  }
-
-  .tc-card__content {
+  .tabbed-card__content {
     display: flex;
     flex-direction: column;
     gap: 9px;
     padding: 16px 0;
   }
 
-  .tc-card__info {
+  .tabbed-card__info {
     display: flex;
     flex-direction: column;
     gap: 9px;
   }
 
-  .tc-card__rating {
+  .tabbed-card__rating {
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 8px;
   }
 
-  .tc-card__stars {
+  .tabbed-card__stars {
     display: flex;
     flex-direction: row;
-    gap: 0;
+    gap: 4px;
 
     svg {
-      width: 16px;
-      height: 16px;
+      flex-shrink: 0;
     }
   }
 
-  .tc-card__rating-text {
+  .tabbed-card__rating-text {
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 2px;
   }
 
-  .tc-card__rating-value {
+  .tabbed-card__rating-value {
     font-family: var(--ds-font-family, 'Poppins', sans-serif);
     font-weight: var(--ds-font-weight-semibold, 600);
     font-size: 12px;
@@ -313,7 +296,7 @@
     color: var(--ds-color-black, #151515);
   }
 
-  .tc-card__rating-count {
+  .tabbed-card__rating-count {
     font-family: var(--ds-font-family, 'Poppins', sans-serif);
     font-weight: var(--ds-font-weight-normal, 400);
     font-size: 12px;
@@ -321,23 +304,23 @@
     color: var(--ds-color-black, #151515);
   }
 
-  .tc-card__title {
+  .tabbed-card__title {
     font-family: var(--ds-font-family, 'Poppins', sans-serif);
     font-weight: var(--ds-font-weight-normal, 400);
     font-size: 14px;
     line-height: 22px;
     color: var(--ds-color-black, #151515);
     margin: 0;
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      position: relative;
+      z-index: 2;
+    }
   }
 
-  .tc-card__title-link {
-    text-decoration: none;
-    color: inherit;
-    position: relative;
-    z-index: 2;
-  }
-
-  .tc-card__price {
+  .tabbed-card__price {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -345,7 +328,7 @@
     flex-wrap: wrap;
   }
 
-  .tc-card__price-sale {
+  .tabbed-card__price-sale {
     font-family: var(--ds-font-family, 'Poppins', sans-serif);
     font-weight: var(--ds-font-weight-semibold, 600);
     font-size: 16px;
@@ -353,7 +336,7 @@
     color: var(--ds-color-black, #151515);
   }
 
-  .tc-card__price-compare {
+  .tabbed-card__price-compare {
     font-family: var(--ds-font-family, 'Poppins', sans-serif);
     font-weight: var(--ds-font-weight-normal, 400);
     font-size: 16px;
@@ -362,37 +345,33 @@
     text-decoration: line-through;
   }
 
-  .tc-card__discount-badge {
-    padding: 3px 6px;
-    border-radius: 4px;
-    background: var(--ds-color-light-red, #FFEEED);
-    color: var(--ds-color-red, #D90400);
+  .tabbed-card__discount-badge {
     font-family: var(--ds-font-family, 'Poppins', sans-serif);
     font-weight: var(--ds-font-weight-normal, 400);
     font-size: 12px;
     line-height: 17px;
-    white-space: nowrap;
+    color: var(--ds-color-red, #D90400);
+    background-color: var(--ds-color-light-red, #FFEEED);
+    padding: 3px 6px;
+    border-radius: 4px;
   }
 
-  .tc-card__quickview {
-    position: relative;
-    z-index: 2;
-    display: inline-block;
-    width: fit-content;
+  .tabbed-card__quickview {
     font-family: var(--ds-font-family, 'Poppins', sans-serif);
     font-weight: var(--ds-font-weight-semibold, 600);
     font-size: 16px;
     line-height: 22px;
     color: var(--ds-color-light-blue, #005695);
-    text-decoration: underline;
-    text-underline-offset: 2px;
-    background: none;
-    border: none;
-    padding: 0;
-    cursor: pointer;
+    text-decoration: none;
+    border-bottom: 1px solid var(--ds-color-light-blue, #005695);
+    padding-bottom: 1px;
+    display: inline-flex;
+    align-self: flex-start;
+    position: relative;
+    z-index: 2;
 
     &:hover {
-      text-decoration-thickness: 2px;
+      opacity: 0.8;
     }
 
     &:focus-visible {
@@ -401,40 +380,38 @@
     }
   }
 
-  /* Screen reader only */
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
+  /* Inner shadow matching Figma */
+  tabbed-collection {
+    box-shadow: inset 0 20px 20px rgba(0, 0, 0, 0.03);
   }
 
+  /* Mobile */
   @media screen and (max-width: 989px) {
-    .tc-wrapper {
+    .tabbed-collection {
       gap: 24px;
     }
 
-    .tc-heading {
+    .tabbed-collection__header {
+      gap: 16px;
+    }
+
+    .tabbed-collection__heading {
       font-size: 24px;
       line-height: 34px;
       letter-spacing: -0.48px;
     }
 
-    .tc-header {
-      gap: 16px;
-    }
-
-    .tc-description {
+    .tabbed-collection__description {
       font-size: 14px;
       line-height: 20px;
     }
 
-    .tc-products {
+    .tabbed-collection__grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+    }
+
+    .tabbed-collection__grid:not([hidden]) {
       display: flex;
       flex-direction: row;
       gap: 16px;
@@ -449,20 +426,23 @@
       }
     }
 
-    .tc-products--hidden {
-      display: none;
-    }
-
-    .tc-card {
+    .tabbed-card {
       min-width: 303px;
       scroll-snap-align: start;
     }
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .tc-tab {
-      transition: none;
-    }
+  /* SR only utility */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
 {% endstylesheet %}
 
@@ -473,8 +453,11 @@
 {% schema %}
 {
   "name": "t:names.tabbed_collection",
-  "tag": "section",
-  "class": "tabbed-collection-section",
+  "tag": "div",
+  "class": "tabbed-collection-wrapper",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
   "settings": [
     {
       "type": "text",
@@ -489,7 +472,7 @@
       "min": 1,
       "max": 10,
       "step": 1,
-      "default": 4
+      "default": 5
     },
     {
       "type": "checkbox",
@@ -518,32 +501,38 @@
     {
       "type": "select",
       "id": "section_width",
-      "label": "t:settings.section_width",
+      "label": "t:settings.width",
       "options": [
-        { "value": "page-width", "label": "t:options.page" },
-        { "value": "full-width", "label": "t:options.full" }
+        {
+          "value": "page-width",
+          "label": "t:options.page"
+        },
+        {
+          "value": "full-width",
+          "label": "t:options.full"
+        }
       ],
       "default": "page-width"
     },
     {
       "type": "range",
       "id": "padding-block-start",
-      "label": "t:settings.top",
+      "label": "t:settings.padding",
       "min": 0,
       "max": 100,
       "step": 1,
-      "unit": "px",
-      "default": 64
+      "default": 64,
+      "unit": "px"
     },
     {
       "type": "range",
       "id": "padding-block-end",
-      "label": "t:settings.bottom",
+      "label": "t:settings.padding",
       "min": 0,
       "max": 100,
       "step": 1,
-      "unit": "px",
-      "default": 64
+      "default": 64,
+      "unit": "px"
     }
   ],
   "blocks": [
@@ -554,8 +543,7 @@
         {
           "type": "text",
           "id": "label",
-          "label": "t:settings.label",
-          "default": "Collection"
+          "label": "t:settings.label"
         },
         {
           "type": "textarea",
@@ -575,17 +563,6 @@
     {
       "name": "t:names.tabbed_collection",
       "category": "t:categories.products",
-      "settings": {
-        "heading": "Explore Best Sellers",
-        "products_to_show": 4,
-        "show_badge": true,
-        "badge_text": "Best Seller",
-        "quickview_label": "Quickview",
-        "color_scheme": "scheme-1",
-        "section_width": "page-width",
-        "padding-block-start": 64,
-        "padding-block-end": 64
-      },
       "blocks": [
         {
           "type": "tab",
@@ -624,9 +601,6 @@
         }
       ]
     }
-  ],
-  "disabled_on": {
-    "groups": ["header", "footer"]
-  }
+  ]
 }
 {% endschema %}
