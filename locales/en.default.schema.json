@@ -1215,7 +1215,8 @@
     "products_to_show": "Products to show",
     "show_badge": "Show badge",
     "badge_text": "Badge text",
-    "quickview_label": "Quickview label"
+    "quickview_label": "Quickview label",
+    "show_feature_icons": "Show feature icons"
   },
   "text_defaults": {
     "accordion_heading": "Accordion heading",

@@ -8,13 +8,15 @@
   @param {boolean} [show_badge] - Whether to show the badge overlay (default: true)
   @param {string} [badge_text] - Text for the badge (default: 'Best Seller')
   @param {string} [quickview_label] - Label for quickview link (default: 'Quickview')
+  @param {boolean} [show_feature_icons] - Whether to show product feature icons from tags (default: true)
 
   @example
   {% render 'tabbed-collection-card',
     product: product,
     show_badge: true,
     badge_text: 'Best Seller',
-    quickview_label: 'Quickview'
+    quickview_label: 'Quickview',
+    show_feature_icons: true
   %}
 {% enddoc %}
 
@@ -23,6 +25,7 @@
   assign show_badge = show_badge | default: true
   assign badge_text = badge_text | default: 'Best Seller'
   assign quickview_label = quickview_label | default: 'Quickview'
+  assign show_feature_icons = show_feature_icons | default: true
 
   unless product != empty
     break
@@ -59,6 +62,35 @@
 
     {% if show_badge and badge_text != blank %}
       <span class="tabbed-card__badge">{{ badge_text }}</span>
+    {% endif %}
+
+    {% if show_feature_icons %}
+      {% liquid
+        assign has_icons = false
+        for tag in product.tags
+          assign tag_lower = tag | downcase
+          if tag_lower contains 'icon:'
+            assign has_icons = true
+            break
+          endif
+        endfor
+      %}
+      {% if has_icons %}
+        <div class="tabbed-card__feature-icons">
+          {% for tag in product.tags %}
+            {% liquid
+              assign tag_lower = tag | downcase
+              unless tag_lower contains 'icon:'
+                continue
+              endunless
+              assign icon_name = tag | split: ':' | last | strip
+            %}
+            <div class="tabbed-card__feature-icon">
+              <img src="{{ icon_name | append: '.svg' | asset_url }}" alt="{{ icon_name }}" width="16" height="16" loading="lazy" />
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
     {% endif %}
   </div>
 

@@ -65,7 +65,8 @@
               product: product,
               show_badge: section.settings.show_badge,
               badge_text: section.settings.badge_text,
-              quickview_label: section.settings.quickview_label
+              quickview_label: section.settings.quickview_label,
+              show_feature_icons: section.settings.show_feature_icons
             %}
           {% endfor %}
         {% else %}
@@ -128,6 +129,7 @@
     scrollbar-width: none;
     -ms-overflow-style: none;
     max-width: 100%;
+    padding: 0 32px;
 
     &::-webkit-scrollbar {
       display: none;
@@ -183,7 +185,7 @@
 
   .tabbed-collection__grid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 32px;
     width: 100%;
   }
@@ -380,6 +382,31 @@
     }
   }
 
+  /* Feature icons */
+  .tabbed-card__feature-icons {
+    position: absolute;
+    bottom: 8px;
+    inset-inline-start: 8px;
+    display: flex;
+    gap: 8px;
+    z-index: 2;
+  }
+
+  .tabbed-card__feature-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 48px;
+    background: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
   /* Inner shadow matching Figma */
   tabbed-collection {
     box-shadow: inset 0 20px 20px rgba(0, 0, 0, 0.03);
@@ -404,11 +431,6 @@
     .tabbed-collection__description {
       font-size: 14px;
       line-height: 20px;
-    }
-
-    .tabbed-collection__grid {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
     }
 
     .tabbed-collection__grid:not([hidden]) {
@@ -472,7 +494,7 @@
       "min": 1,
       "max": 10,
       "step": 1,
-      "default": 5
+      "default": 4
     },
     {
       "type": "checkbox",
@@ -491,6 +513,12 @@
       "id": "quickview_label",
       "label": "t:settings.quickview_label",
       "default": "Quickview"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_feature_icons",
+      "label": "t:settings.show_feature_icons",
+      "default": true
     },
     {
       "type": "color_scheme",
