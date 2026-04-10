@@ -78,42 +78,7 @@
 
   {% if total_slides > 1 %}
     <div class="hero-carousel__thumbnails-wrapper">
-      <div class="hero-carousel__thumbnails">
-        {% for block in section.blocks %}
-          {% liquid
-            assign thumb_image = block.settings.thumbnail_image
-            if thumb_image == blank
-              assign thumb_image = block.settings.image
-            endif
-          %}
-          <button
-            class="hero-carousel__thumbnail{% if forloop.index0 == 0 %} hero-carousel__thumbnail--active{% endif %}"
-            ref="thumbnails[]"
-            on:click="/select/{{ forloop.index0 }}"
-            aria-label="{{ 'accessibility.slide_status' | t: index: forloop.index, length: total_slides }}"
-            aria-current="{% if forloop.index0 == 0 %}true{% else %}false{% endif %}"
-            type="button"
-          >
-            <span class="hero-carousel__thumbnail-image-wrapper">
-              {% if thumb_image != blank %}
-                <img
-                  src="{{ thumb_image | image_url: width: 222 }}"
-                  alt=""
-                  class="hero-carousel__thumbnail-image"
-                  loading="eager"
-                  width="111"
-                  height="65"
-                >
-              {% else %}
-                <span class="hero-carousel__thumbnail-placeholder"></span>
-              {% endif %}
-              <span class="hero-carousel__thumbnail-overlay"></span>
-            </span>
-            <span class="hero-carousel__progress-track">
-              <span class="hero-carousel__progress-fill" ref="progressFills[]"></span>
-            </span>
-          </button>
-        {% endfor %}
+      <div class="hero-carousel__thumbnails" ref="thumbnailsContainer">
 
         <button
           class="hero-carousel__play-pause"

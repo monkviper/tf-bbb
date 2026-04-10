@@ -12,6 +12,11 @@
   assign total_slides = section.blocks.size
   assign content_alignment_desktop = section.settings.content_alignment_desktop | default: 'left'
   assign content_alignment_mobile = section.settings.content_alignment_mobile | default: 'left'
+
+  assign thumb_img = block.settings.thumbnail_image
+  if thumb_img == blank
+    assign thumb_img = block.settings.image
+  endif
 %}
 
 <div
@@ -22,6 +27,7 @@
   aria-roledescription="slide"
   aria-label="{{ 'accessibility.hero_carousel_slide_status' | t: current: slide_index | plus: 1, total: total_slides }}"
   {% if slide_index != 0 %}aria-hidden="true"{% endif %}
+  {% if thumb_img != blank %}data-thumbnail-url="{{ thumb_img | image_url: width: 222 }}"{% endif %}
 >
   <div class="hero-carousel__media">
     {% if block.settings.image != blank %}
