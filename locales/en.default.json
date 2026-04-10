@@ -56,7 +56,10 @@
     "slideshow_previous": "Previous slide",
     "unit_price": "Unit price",
     "find_country": "Find country",
-    "view_pricing_info": "View pricing information"
+    "view_pricing_info": "View pricing information",
+    "hero_carousel_pause": "Pause slideshow",
+    "hero_carousel_play": "Play slideshow",
+    "hero_carousel_slide_status": "Slide {{ current }} of {{ total }}"
   },
   "actions": {
     // Quick add button on product cards, shortened version of add to cart

@@ -437,7 +437,9 @@
     "video_section": "Video",
     "view_all_button": "View all",
     "pills": "Pills",
-    "comparison_slider": "Comparison slider"
+    "comparison_slider": "Comparison slider",
+    "hero_carousel": "Hero carousel",
+    "hero_carousel_slide": "Slide"
   },
   "options": {
     "above_carousel": "Above carousel",
@@ -751,7 +753,11 @@
     "wide": "Wide",
     "youtube": "YouTube",
     "with_hints": "With hints",
-    "below_media": "Below media"
+    "below_media": "Below media",
+    "center_left": "Center left",
+    "center_center": "Center center",
+    "top_center": "Top center",
+    "bottom_center": "Bottom center"
   },
   "settings": {
     "accordion": "Accordion",
@@ -1189,7 +1195,19 @@
     "utility_link_2_text": "Link 2 text",
     "utility_link_2_url": "Link 2 URL",
     "show_phone": "Show phone CTA",
-    "phone_number": "Phone number"
+    "phone_number": "Phone number",
+    "autoplay_speed": "Autoplay speed",
+    "content_position_desktop": "Position (desktop)",
+    "content_position_mobile": "Position (mobile)",
+    "content_alignment_desktop": "Alignment (desktop)",
+    "content_alignment_mobile": "Alignment (mobile)",
+    "section_height": "Section height",
+    "trust_text": "Trust text",
+    "show_stars": "Show stars",
+    "thumbnail_image": "Thumbnail image",
+    "image_mobile": "Mobile image",
+    "subheading": "Subheading",
+    "button_label": "Button label"
   },
   "text_defaults": {
     "accordion_heading": "Accordion heading",

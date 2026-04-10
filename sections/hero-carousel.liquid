@@ -1,0 +1,710 @@
+{% liquid
+  assign total_slides = section.blocks.size
+  assign autoplay_speed = section.settings.autoplay_speed | default: 5
+  assign content_position_desktop = section.settings.content_position_desktop | default: 'bottom-left'
+  assign content_position_mobile = section.settings.content_position_mobile | default: 'top-left'
+
+  assign pos_parts_desktop = content_position_desktop | split: '-'
+  assign pos_vertical_desktop = pos_parts_desktop[0]
+  assign pos_horizontal_desktop = pos_parts_desktop[1]
+
+  assign pos_parts_mobile = content_position_mobile | split: '-'
+  assign pos_vertical_mobile = pos_parts_mobile[0]
+  assign pos_horizontal_mobile = pos_parts_mobile[1]
+
+  case pos_vertical_desktop
+    when 'top'
+      assign justify_desktop = 'flex-start'
+    when 'center'
+      assign justify_desktop = 'center'
+    when 'bottom'
+      assign justify_desktop = 'flex-end'
+  endcase
+
+  case pos_horizontal_desktop
+    when 'left'
+      assign align_desktop = 'flex-start'
+    when 'center'
+      assign align_desktop = 'center'
+  endcase
+
+  case pos_vertical_mobile
+    when 'top'
+      assign justify_mobile = 'flex-start'
+    when 'center'
+      assign justify_mobile = 'center'
+    when 'bottom'
+      assign justify_mobile = 'flex-end'
+  endcase
+
+  case pos_horizontal_mobile
+    when 'left'
+      assign align_mobile = 'flex-start'
+    when 'center'
+      assign align_mobile = 'center'
+  endcase
+%}
+
+<hero-carousel-component
+  class="hero-carousel-wrapper section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }}"
+  data-autoplay-speed="{{ autoplay_speed }}"
+  role="region"
+  aria-roledescription="carousel"
+  aria-label="{{ 'accessibility.slideshow' | t }}"
+  style="
+    --padding-block-start: {{ section.settings.padding-block-start }}px;
+    --padding-block-end: {{ section.settings.padding-block-end }}px;
+    --content-justify-desktop: {{ justify_desktop }};
+    --content-align-desktop: {{ align_desktop }};
+    --content-justify-mobile: {{ justify_mobile }};
+    --content-align-mobile: {{ align_mobile }};
+    --content-alignment-desktop: {{ section.settings.content_alignment_desktop }};
+    --content-alignment-mobile: {{ section.settings.content_alignment_mobile }};
+  "
+  on:mouseenter="/handleMouseEnter"
+  on:mouseleave="/handleMouseLeave"
+>
+  <div class="hero-carousel__slides" aria-live="off" ref="slidesContainer">
+    {% content_for 'blocks' %}
+  </div>
+
+  {% if section.settings.toggle_overlay %}
+    <div
+      class="hero-carousel__overlay"
+      style="background-color: {{ section.settings.overlay_color }};"
+    ></div>
+  {% endif %}
+
+  {% if total_slides > 1 %}
+    <div class="hero-carousel__thumbnails-wrapper">
+      <div class="hero-carousel__thumbnails">
+        {% for block in section.blocks %}
+          {% liquid
+            assign thumb_image = block.settings.thumbnail_image
+            if thumb_image == blank
+              assign thumb_image = block.settings.image
+            endif
+          %}
+          <button
+            class="hero-carousel__thumbnail{% if forloop.index0 == 0 %} hero-carousel__thumbnail--active{% endif %}"
+            ref="thumbnails"
+            on:click="/select/{{ forloop.index0 }}"
+            aria-label="{{ 'accessibility.slide_status' | t: index: forloop.index, length: total_slides }}"
+            aria-current="{% if forloop.index0 == 0 %}true{% else %}false{% endif %}"
+            type="button"
+          >
+            <span class="hero-carousel__thumbnail-image-wrapper">
+              {% if thumb_image != blank %}
+                <img
+                  src="{{ thumb_image | image_url: width: 222 }}"
+                  alt=""
+                  class="hero-carousel__thumbnail-image"
+                  loading="eager"
+                  width="111"
+                  height="65"
+                >
+              {% else %}
+                <span class="hero-carousel__thumbnail-placeholder"></span>
+              {% endif %}
+              <span class="hero-carousel__thumbnail-overlay"></span>
+            </span>
+            <span class="hero-carousel__progress-track">
+              <span class="hero-carousel__progress-fill" ref="progressFills"></span>
+            </span>
+          </button>
+        {% endfor %}
+
+        <button
+          class="hero-carousel__play-pause"
+          ref="playPauseBtn"
+          on:click="/togglePlayPause"
+          aria-label="{{ 'accessibility.hero_carousel_pause' | t }}"
+          type="button"
+        >
+          <span class="hero-carousel__pause-icon">
+            <img
+              class="hero-carousel__pp-icon hero-carousel__pp-icon--desktop"
+              src="{{ 'btn-pause-1-2.svg' | asset_url }}"
+              alt=""
+              width="24"
+              height="24"
+            >
+            <img
+              class="hero-carousel__pp-icon hero-carousel__pp-icon--mobile"
+              src="{{ 'btn-pause-1.svg' | asset_url }}"
+              alt=""
+              width="20"
+              height="20"
+            >
+          </span>
+        </button>
+      </div>
+    </div>
+
+    <div class="visually-hidden" role="status" ref="liveRegion"></div>
+  {% endif %}
+</hero-carousel-component>
+
+{% stylesheet %}
+.hero-carousel-wrapper {
+  position: relative;
+  overflow: hidden;
+  padding-block-start: var(--padding-block-start, 0px);
+  padding-block-end: var(--padding-block-end, 0px);
+}
+
+.hero-carousel__slides {
+  position: relative;
+  width: 100%;
+  min-height: 400px;
+}
+
+.hero-carousel__slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+.hero-carousel__slide--active {
+  position: relative;
+  opacity: 1;
+  visibility: visible;
+  z-index: 1;
+}
+
+.hero-carousel__media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.hero-carousel__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-carousel__placeholder {
+  width: 100%;
+  height: 100%;
+  background-color: #c4c4c4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-carousel__placeholder-svg {
+  width: 50%;
+  height: auto;
+  opacity: 0.5;
+}
+
+.hero-carousel__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hero-carousel__content {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  padding: 48px 64px;
+  pointer-events: none;
+  justify-content: var(--content-justify-desktop);
+  align-items: var(--content-align-desktop);
+  text-align: var(--content-alignment-desktop, left);
+}
+
+.hero-carousel__content-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 424px;
+  pointer-events: auto;
+}
+
+.hero-carousel__content-inner > * + .hero-carousel__button {
+  margin-block-start: 16px;
+}
+
+.hero-carousel__trust-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hero-carousel__trust-text {
+  font-family: var(--font-body--family);
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 17px;
+  color: #FFFFFF;
+}
+
+.hero-carousel__stars--mobile {
+  display: none;
+}
+
+.hero-carousel__stars svg {
+  display: block;
+}
+
+.hero-carousel__heading {
+  font-family: var(--font-heading--family);
+  font-weight: 600;
+  font-size: 48px;
+  line-height: 67px;
+  color: #FFFFFF;
+  margin: 0;
+}
+
+.hero-carousel__subheading {
+  font-family: var(--font-body--family);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 22px;
+  color: #FFFFFF;
+  margin: 0;
+}
+
+.hero-carousel__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 4px 24px;
+  background-color: #FFFFFF;
+  border: 1px solid #02267E;
+  border-radius: 4px;
+  font-family: var(--font-body--family);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: #151515;
+  text-decoration: none;
+  cursor: pointer;
+  width: fit-content;
+  min-height: 40px;
+}
+
+.hero-carousel__button:hover {
+  opacity: 0.85;
+}
+
+.hero-carousel__thumbnails-wrapper {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  justify-content: center;
+  margin-block-start: -32px;
+  padding-inline: 64px;
+}
+
+.hero-carousel__thumbnails {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hero-carousel__thumbnail {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: relative;
+}
+
+.hero-carousel__thumbnail:focus-visible {
+  outline: 2px solid #02267E;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.hero-carousel__thumbnail-image-wrapper {
+  position: relative;
+  display: block;
+  width: 111px;
+  height: 65px;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid #C9CAD4;
+}
+
+.hero-carousel__thumbnail-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-carousel__thumbnail-placeholder {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: #e0e0e0;
+}
+
+.hero-carousel__thumbnail-overlay {
+  position: absolute;
+  inset: 0;
+  background-color: #464648;
+  opacity: 0;
+  border-radius: 4px;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.hero-carousel__thumbnail--active .hero-carousel__thumbnail-overlay {
+  opacity: 0.6;
+}
+
+.hero-carousel__progress-track {
+  display: block;
+  width: 100%;
+  height: 4px;
+  background-color: #C9CAD4;
+  margin-block-start: 4px;
+  border-radius: 0;
+  overflow: hidden;
+}
+
+.hero-carousel__progress-fill {
+  display: block;
+  height: 100%;
+  width: 0%;
+  background-color: #02267E;
+  transition: none;
+}
+
+.hero-carousel__play-pause {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.hero-carousel__play-pause:focus-visible {
+  outline: 2px solid #02267E;
+  outline-offset: 2px;
+  border-radius: 50%;
+}
+
+.hero-carousel__pp-icon--mobile {
+  display: none;
+}
+
+.hero-carousel__pp-icon--desktop {
+  display: block;
+  width: 24px;
+  height: 24px;
+}
+
+/* Section height variants */
+.hero-carousel-wrapper .hero-carousel__slides {
+  min-height: 560px;
+}
+
+.hero-carousel-wrapper[style*="--section-height: auto"] .hero-carousel__slides {
+  min-height: auto;
+}
+
+.hero-carousel-wrapper[style*="--section-height: small"] .hero-carousel__slides {
+  min-height: 400px;
+}
+
+.hero-carousel-wrapper[style*="--section-height: large"] .hero-carousel__slides {
+  min-height: 720px;
+}
+
+/* Mobile styles */
+@media screen and (max-width: 749px) {
+  .hero-carousel__slides {
+    min-height: 503px;
+  }
+
+  .hero-carousel-wrapper .hero-carousel__slides {
+    min-height: 503px;
+  }
+
+  .hero-carousel__content {
+    padding: 24px 16px 284px 16px;
+    justify-content: var(--content-justify-mobile);
+    align-items: var(--content-align-mobile);
+    text-align: var(--content-alignment-mobile, left);
+  }
+
+  .hero-carousel__content-inner {
+    gap: 11px;
+    max-width: 358px;
+  }
+
+  .hero-carousel__content-inner > * + .hero-carousel__button {
+    margin-block-start: 0;
+  }
+
+  .hero-carousel__trust-text {
+    font-size: 10px;
+    line-height: 12px;
+  }
+
+  .hero-carousel__stars--desktop {
+    display: none;
+  }
+
+  .hero-carousel__stars--mobile {
+    display: inline-flex;
+  }
+
+  .hero-carousel__heading {
+    font-size: 32px;
+    line-height: 45px;
+  }
+
+  .hero-carousel__subheading {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .hero-carousel__thumbnails-wrapper {
+    margin-block-start: -24px;
+    padding-inline: 16px;
+  }
+
+  .hero-carousel__thumbnails {
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    position: relative;
+  }
+
+  .hero-carousel__thumbnail-image-wrapper {
+    width: 80px;
+    height: 48px;
+  }
+
+  .hero-carousel__progress-track {
+    width: 80px;
+  }
+
+  .hero-carousel__pp-icon--desktop {
+    display: none;
+  }
+
+  .hero-carousel__pp-icon--mobile {
+    display: block;
+    width: 20px;
+    height: 20px;
+  }
+}
+{% endstylesheet %}
+
+<script src="{{ 'hero-carousel.js' | asset_url }}" type="module"></script>
+
+{% schema %}
+{
+  "name": "t:names.hero_carousel",
+  "tag": "section",
+  "class": "hero-carousel-section",
+  "blocks": [
+    {
+      "type": "_hero-carousel-slide",
+      "name": "t:names.hero_carousel_slide",
+      "limit": 10
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:content.carousel"
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "label": "t:settings.autoplay_speed",
+      "min": 3,
+      "max": 15,
+      "step": 1,
+      "default": 5,
+      "unit": "s"
+    },
+    {
+      "type": "header",
+      "content": "t:content.layout"
+    },
+    {
+      "type": "select",
+      "id": "content_position_desktop",
+      "label": "t:settings.content_position_desktop",
+      "options": [
+        { "value": "top-left", "label": "t:options.top_left" },
+        { "value": "top-center", "label": "t:options.top_center" },
+        { "value": "center-left", "label": "t:options.center_left" },
+        { "value": "center-center", "label": "t:options.center_center" },
+        { "value": "bottom-left", "label": "t:options.bottom_left" },
+        { "value": "bottom-center", "label": "t:options.bottom_center" }
+      ],
+      "default": "bottom-left"
+    },
+    {
+      "type": "select",
+      "id": "content_position_mobile",
+      "label": "t:settings.content_position_mobile",
+      "options": [
+        { "value": "top-left", "label": "t:options.top_left" },
+        { "value": "top-center", "label": "t:options.top_center" },
+        { "value": "bottom-left", "label": "t:options.bottom_left" },
+        { "value": "bottom-center", "label": "t:options.bottom_center" }
+      ],
+      "default": "top-left"
+    },
+    {
+      "type": "select",
+      "id": "content_alignment_desktop",
+      "label": "t:settings.content_alignment_desktop",
+      "options": [
+        { "value": "left", "label": "t:options.left" },
+        { "value": "center", "label": "t:options.center" },
+        { "value": "right", "label": "t:options.right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "content_alignment_mobile",
+      "label": "t:settings.content_alignment_mobile",
+      "options": [
+        { "value": "left", "label": "t:options.left" },
+        { "value": "center", "label": "t:options.center" },
+        { "value": "right", "label": "t:options.right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "t:content.section_size"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "t:settings.section_width",
+      "options": [
+        { "value": "page-width", "label": "t:options.page" },
+        { "value": "full-width", "label": "t:options.full" }
+      ],
+      "default": "full-width"
+    },
+    {
+      "type": "select",
+      "id": "section_height",
+      "label": "t:settings.section_height",
+      "options": [
+        { "value": "auto", "label": "t:options.auto" },
+        { "value": "small", "label": "t:options.small" },
+        { "value": "medium", "label": "t:options.medium" },
+        { "value": "large", "label": "t:options.large" }
+      ],
+      "default": "medium"
+    },
+    {
+      "type": "header",
+      "content": "t:content.colors"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-6"
+    },
+    {
+      "type": "checkbox",
+      "id": "toggle_overlay",
+      "label": "t:settings.overlay",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "t:settings.overlay_color",
+      "default": "#12121266"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 0,
+      "unit": "px"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.hero_carousel",
+      "category": "t:categories.banners",
+      "blocks": [
+        {
+          "type": "_hero-carousel-slide",
+          "settings": {
+            "heading": "Conquer Every Climate.",
+            "subheading": "Reliable lithium power in the harshest conditions.",
+            "trust_text": "Trusted by over 5 million users",
+            "show_stars": true,
+            "button_label": "Shop now"
+          }
+        },
+        {
+          "type": "_hero-carousel-slide",
+          "settings": {
+            "heading": "Conquer Every Climate.",
+            "subheading": "Reliable lithium power in the harshest conditions.",
+            "trust_text": "Trusted by over 5 million users",
+            "show_stars": true,
+            "button_label": "Shop now"
+          }
+        },
+        {
+          "type": "_hero-carousel-slide",
+          "settings": {
+            "heading": "Conquer Every Climate.",
+            "subheading": "Reliable lithium power in the harshest conditions.",
+            "trust_text": "Trusted by over 5 million users",
+            "show_stars": true,
+            "button_label": "Shop now"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

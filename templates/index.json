@@ -9,6 +9,59 @@
  */
  {
   "sections": {
+    "hero_carousel_Kx7mNq": {
+      "type": "hero-carousel",
+      "blocks": {
+        "slide_1_aB3cDe": {
+          "type": "_hero-carousel-slide",
+          "settings": {
+            "heading": "Conquer Every Climate.",
+            "subheading": "Reliable lithium power in the harshest conditions.",
+            "trust_text": "Trusted by over 5 million users",
+            "show_stars": true,
+            "button_label": "Shop now"
+          }
+        },
+        "slide_2_fG4hIj": {
+          "type": "_hero-carousel-slide",
+          "settings": {
+            "heading": "Conquer Every Climate.",
+            "subheading": "Reliable lithium power in the harshest conditions.",
+            "trust_text": "Trusted by over 5 million users",
+            "show_stars": true,
+            "button_label": "Shop now"
+          }
+        },
+        "slide_3_kL5mNo": {
+          "type": "_hero-carousel-slide",
+          "settings": {
+            "heading": "Conquer Every Climate.",
+            "subheading": "Reliable lithium power in the harshest conditions.",
+            "trust_text": "Trusted by over 5 million users",
+            "show_stars": true,
+            "button_label": "Shop now"
+          }
+        }
+      },
+      "block_order": [
+        "slide_1_aB3cDe",
+        "slide_2_fG4hIj",
+        "slide_3_kL5mNo"
+      ],
+      "settings": {
+        "autoplay_speed": 5,
+        "content_position_desktop": "bottom-left",
+        "content_position_mobile": "top-left",
+        "content_alignment_desktop": "left",
+        "content_alignment_mobile": "left",
+        "section_width": "full-width",
+        "section_height": "medium",
+        "color_scheme": "scheme-6",
+        "toggle_overlay": false,
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
     "hero_jVaWmY": {
       "type": "hero",
       "blocks": {
@@ -282,6 +335,7 @@
     }
   },
   "order": [
+    "hero_carousel_Kx7mNq",
     "hero_jVaWmY",
     "product_list_fa6P9H"
   ]
