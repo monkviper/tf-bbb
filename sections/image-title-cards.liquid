@@ -5,7 +5,7 @@
     --padding-block-end: {{ section.settings.padding-block-end }}px;
   '
 >
-  <div class='image-title-cards__inner spacing-style'>
+  <div class='image-title-cards__inner spacing-style' style="{% render 'spacing-style', settings: section.settings %}">
     {% if section.settings.heading != blank or section.settings.subheading != blank %}
       <div class='image-title-cards__header'>
         {% if section.settings.heading != blank %}

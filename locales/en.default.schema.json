@@ -854,6 +854,7 @@
     // Primary color scheme option, not specialized variants
     "default": "Default",
     "default_logo": "Default logo",
+    "description": "Description",
     "desktop_height": "Desktop height",
     "desktop_pagination": "Desktop pagination",
     "direction": "Direction",
