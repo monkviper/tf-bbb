@@ -7,7 +7,7 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
- {
+{
   "sections": {
     "hero_carousel_Kx7mNq": {
       "type": "hero-carousel",
@@ -15,32 +15,44 @@
         "slide_1_aB3cDe": {
           "type": "_hero-carousel-slide",
           "settings": {
-            "heading": "Conquer Every Climate.",
-            "subheading": "Reliable lithium power in the harshest conditions.",
+            "image": "shopify://shop_images/rectangle-mobile-I8631040986310405.png",
+            "thumbnail_image": "shopify://shop_images/image-6-desktop-I663130381339818076572.png",
             "trust_text": "Trusted by over 5 million users",
             "show_stars": true,
-            "button_label": "Shop now"
-          }
+            "heading": "Conquer Every Climate.",
+            "subheading": "Reliable lithium power in the harshest conditions.",
+            "button_label": "Shop now",
+            "button_link": ""
+          },
+          "blocks": {}
         },
         "slide_2_fG4hIj": {
           "type": "_hero-carousel-slide",
           "settings": {
-            "heading": "Conquer Every Climate.",
-            "subheading": "Reliable lithium power in the harshest conditions.",
+            "image": "shopify://shop_images/image-7-desktop-I66313036631269.png",
+            "thumbnail_image": "shopify://shop_images/image-6-desktop-I663130381339818076572.png",
             "trust_text": "Trusted by over 5 million users",
             "show_stars": true,
-            "button_label": "Shop now"
-          }
+            "heading": "Conquer Every Climate.",
+            "subheading": "Reliable lithium power in the harshest conditions.",
+            "button_label": "Shop now",
+            "button_link": ""
+          },
+          "blocks": {}
         },
         "slide_3_kL5mNo": {
           "type": "_hero-carousel-slide",
           "settings": {
-            "heading": "Conquer Every Climate.",
-            "subheading": "Reliable lithium power in the harshest conditions.",
+            "image": "shopify://shop_images/rectangle-desktop-I66318686631855.png",
+            "thumbnail_image": "shopify://shop_images/image-6-desktop-I663130381339818076572.png",
             "trust_text": "Trusted by over 5 million users",
             "show_stars": true,
-            "button_label": "Shop now"
-          }
+            "heading": "Conquer Every Climate.",
+            "subheading": "Reliable lithium power in the harshest conditions.",
+            "button_label": "Shop now",
+            "button_link": ""
+          },
+          "blocks": {}
         }
       },
       "block_order": [
@@ -50,7 +62,7 @@
       ],
       "settings": {
         "autoplay_speed": 5,
-        "content_position_desktop": "bottom-left",
+        "content_position_desktop": "top-left",
         "content_position_mobile": "top-left",
         "content_alignment_desktop": "left",
         "content_alignment_mobile": "left",
@@ -58,6 +70,7 @@
         "section_height": "medium",
         "color_scheme": "scheme-6",
         "toggle_overlay": false,
+        "overlay_color": "#12121266",
         "padding-block-start": 0,
         "padding-block-end": 0
       }
@@ -115,6 +128,10 @@
       "settings": {
         "media_type_1": "image",
         "media_type_2": "image",
+        "stack_media_on_mobile": false,
+        "custom_mobile_media": false,
+        "media_type_1_mobile": "image",
+        "media_type_2_mobile": "image",
         "link": "",
         "open_in_new_tab": false,
         "content_direction": "column",
