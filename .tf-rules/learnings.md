@@ -1,0 +1,7 @@
+## Consolidated
+
+## Recent
+[chat] spacing-style requires BOTH the CSS class AND {% render 'spacing-style', settings: section.settings %} in the inline style attribute — the class alone does nothing
+[chat] Section width options use t:options.page and t:options.full — NOT t:options.page_width / t:options.full_width
+[chat] Always verify every t: translation key against locales/en.default.schema.json before using — keys under "names" vs "settings" vs "options" are different namespaces
+[chat] When implementing a shared pattern (spacing-style, color scheme, etc.), grep an existing section to see the full implementation — don't guess from the class name alone
