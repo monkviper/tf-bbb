@@ -1,0 +1,111 @@
+{%- doc -%}
+  Tabbed Collection Product Card
+
+  Renders a product card for the tabbed collection section matching the Figma design.
+
+  @param {object} product - Product object (required)
+  @param {boolean} show_badge - Show badge overlay (default: true)
+  @param {string} badge_text - Badge text (default: 'Best Seller')
+  @param {string} quickview_label - Quickview link text (default: 'Quickview')
+
+  @example
+  {% render 'tabbed-collection-card',
+    product: product,
+    show_badge: true,
+    badge_text: 'Best Seller',
+    quickview_label: 'Quickview'
+  %}
+{%- enddoc -%}
+
+{%- liquid
+  assign product = product | default: empty
+  assign show_badge = show_badge | default: true
+  assign badge_text = badge_text | default: 'Best Seller'
+  assign quickview_label = quickview_label | default: 'Quickview'
+
+  unless product != empty
+    break
+  endunless
+
+  assign current_variant = product.selected_or_first_available_variant
+  assign compare_price = current_variant.compare_at_price
+  assign price = current_variant.price
+
+  assign has_discount = false
+  assign discount_pct = 0
+  if compare_price > price
+    assign has_discount = true
+    assign diff = compare_price | minus: price
+    assign discount_pct = diff | times: 100.0 | divided_by: compare_price | round
+  endif
+-%}
+
+<article class="tc-card" aria-labelledby="tc-card-title-{{ product.id }}">
+  <a href="{{ product.url }}" class="tc-card__link" aria-hidden="true" tabindex="-1"></a>
+
+  <div class="tc-card__media">
+    {%- if product.featured_image -%}
+      {%- assign sizes_val = '(min-width: 990px) 303px, 303px' -%}
+      {{
+        product.featured_image
+        | image_url: width: product.featured_image.width
+        | image_tag:
+          sizes: sizes_val,
+          widths: '200,303,400,606',
+          loading: 'lazy',
+          class: 'tc-card__image',
+          alt: product.featured_image.alt | default: product.title
+      }}
+    {%- else -%}
+      <div class="tc-card__image-placeholder">
+        {{ 'product-1' | placeholder_svg_tag: 'tc-card__placeholder-svg' }}
+      </div>
+    {%- endif -%}
+
+    {%- if show_badge and badge_text != blank -%}
+      <span class="tc-card__badge">{{ badge_text | escape }}</span>
+    {%- endif -%}
+
+    <div class="tc-card__icons">
+      <span class="tc-card__icon-circle">
+        <img src="{{ 'bluetooth-2.svg' | asset_url }}" alt="" width="24" height="24" loading="lazy">
+      </span>
+      <span class="tc-card__icon-circle">
+        <img src="{{ 'heated.svg' | asset_url }}" alt="" width="24" height="24" loading="lazy">
+      </span>
+    </div>
+  </div>
+
+  <div class="tc-card__content">
+    <div class="tc-card__info">
+      <div class="tc-card__rating">
+        <div class="tc-card__stars" aria-hidden="true">
+          {%- for i in (1..5) -%}
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8 1.12L9.78 5.26L14.22 5.73L10.89 8.7L11.82 13.06L8 10.77L4.18 13.06L5.11 8.7L1.78 5.73L6.22 5.26L8 1.12Z" fill="#1A73E8" stroke="#1A73E8" stroke-width="0.5"/>
+            </svg>
+          {%- endfor -%}
+        </div>
+        <div class="tc-card__rating-text">
+          <span class="tc-card__rating-value">4.5</span>
+          <span class="tc-card__rating-count">(300)</span>
+        </div>
+      </div>
+
+      <h3 id="tc-card-title-{{ product.id }}" class="tc-card__title">
+        <a href="{{ product.url }}" class="tc-card__title-link">{{ product.title | escape }}</a>
+      </h3>
+
+      <div class="tc-card__price">
+        <span class="tc-card__price-sale">{{ price | money }}</span>
+        {%- if has_discount -%}
+          <span class="sr-only">{{ 'general.accessibility.regular_price' | t | default: 'Regular price' }}</span>
+          <s class="tc-card__price-compare">{{ compare_price | money }}</s>
+          <span class="tc-card__discount-badge">{{ discount_pct }}% off</span>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <a href="{{ product.url }}" class="tc-card__quickview">{{ quickview_label | escape }}</a>
+  </div>
+</article>

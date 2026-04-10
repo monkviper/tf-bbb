@@ -404,12 +404,71 @@
         "padding-block-start": 48,
         "padding-block-end": 48
       }
+    },
+    "tabbed_collection_Bx9kLm": {
+      "type": "tabbed-collection",
+      "blocks": {
+        "tab_1_aB3cDe": {
+          "type": "tab",
+          "settings": {
+            "label": "LiFePO₄ Batteries",
+            "description": "Power lights, fans, furnace, water pump, refrigerator, satellite Internet & everyday essentials reliably through the night"
+          }
+        },
+        "tab_2_fG4hIj": {
+          "type": "tab",
+          "settings": {
+            "label": "Smart LiFePO₄ Batteries",
+            "description": "Smart monitoring and control for your lithium battery system"
+          }
+        },
+        "tab_3_kL5mNo": {
+          "type": "tab",
+          "settings": {
+            "label": "Inverter Power",
+            "description": "Convert battery power to household AC for all your devices"
+          }
+        },
+        "tab_4_pQ6rSt": {
+          "type": "tab",
+          "settings": {
+            "label": "Solar Integration",
+            "description": "Harness solar energy to charge and maintain your battery bank"
+          }
+        },
+        "tab_5_uV7wXy": {
+          "type": "tab",
+          "settings": {
+            "label": "Alternator Charging",
+            "description": "Charge your batteries efficiently while driving with alternator charging solutions"
+          }
+        }
+      },
+      "block_order": [
+        "tab_1_aB3cDe",
+        "tab_2_fG4hIj",
+        "tab_3_kL5mNo",
+        "tab_4_pQ6rSt",
+        "tab_5_uV7wXy"
+      ],
+      "settings": {
+        "heading": "Explore Best Sellers",
+        "products_to_show": 4,
+        "show_badge": true,
+        "badge_text": "Best Seller",
+        "quickview_label": "Quickview",
+        "color_scheme": "scheme-1",
+        "section_width": "page-width",
+        "padding-block-start": 64,
+        "padding-block-end": 64
+      }
     }
   },
   "order": [
     "hero_carousel_Kx7mNq",
     "hero_jVaWmY",
     "image_title_cards_Xk4mTz",
-    "product_list_fa6P9H"
+    "product_list_fa6P9H",
+    "tabbed_collection_Bx9kLm"
   ]
 }

@@ -440,7 +440,9 @@
     "comparison_slider": "Comparison slider",
     "hero_carousel": "Hero carousel",
     "hero_carousel_slide": "Slide",
-    "image_title_cards": "Image title cards"
+    "image_title_cards": "Image title cards",
+    "tabbed_collection": "Tabbed collection",
+    "collection_tab": "Collection tab"
   },
   "options": {
     "above_carousel": "Above carousel",
@@ -1209,7 +1211,11 @@
     "thumbnail_image": "Thumbnail image",
     "image_mobile": "Mobile image",
     "subheading": "Subheading",
-    "button_label": "Button label"
+    "button_label": "Button label",
+    "products_to_show": "Products to show",
+    "show_badge": "Show badge",
+    "badge_text": "Badge text",
+    "quickview_label": "Quickview label"
   },
   "text_defaults": {
     "accordion_heading": "Accordion heading",
