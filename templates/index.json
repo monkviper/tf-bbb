@@ -156,6 +156,61 @@
         "padding-block-end": 72
       }
     },
+    "image_title_cards_Xk4mTz": {
+      "type": "image-title-cards",
+      "blocks": {
+        "card_1_aBcDeF": {
+          "type": "card",
+          "settings": {
+            "title": "Life PO4 Batteries",
+            "description": "Life PO4 batteries built for reliable power"
+          }
+        },
+        "card_2_gHiJkL": {
+          "type": "card",
+          "settings": {
+            "title": "Charging & Power",
+            "description": "Charging and power conversion components"
+          }
+        },
+        "card_3_mNoPqR": {
+          "type": "card",
+          "settings": {
+            "title": "Solar Panels",
+            "description": "Solar components for off-grid power systems"
+          }
+        },
+        "card_4_sTuVwX": {
+          "type": "card",
+          "settings": {
+            "title": "Monitoring & Control",
+            "description": "Smart system monitoring and control"
+          }
+        },
+        "card_5_yZaBcD": {
+          "type": "card",
+          "settings": {
+            "title": "Complete Systems",
+            "description": "Integrated power systems designed to work together."
+          }
+        }
+      },
+      "block_order": [
+        "card_1_aBcDeF",
+        "card_2_gHiJkL",
+        "card_3_mNoPqR",
+        "card_4_sTuVwX",
+        "card_5_yZaBcD"
+      ],
+      "settings": {
+        "heading": "Explore Power Solutions",
+        "subheading": "At Battle Born Batteries, our goal is to power your ideal RV experience. We build our lithium-ion RV batteries to perform better, last longer, and provide the deliverable power",
+        "color_scheme": "scheme-1",
+        "section_width": "page-width",
+        "padding-block-start": 64,
+        "padding-block-end": 64
+      }
+    },
     "product_list_fa6P9H": {
       "type": "product-list",
       "blocks": {
@@ -354,6 +409,7 @@
   "order": [
     "hero_carousel_Kx7mNq",
     "hero_jVaWmY",
+    "image_title_cards_Xk4mTz",
     "product_list_fa6P9H"
   ]
 }
